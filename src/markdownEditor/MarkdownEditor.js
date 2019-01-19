@@ -1,14 +1,12 @@
 import * as React from "react";
 import * as Showdown from "showdown";
 import Preview from "./Preview";
-import "react-mde/lib/styles/css/react-mde-all.css";
 import "draft-js/dist/Draft.css";
 import "./style.css";
 import Drawer from "./Drawer";
 import AppBar from "./AppBar";
 import Markdown from "./Markdown";
 import html2pdf from "html2pdf.js";
-import ReactMde, { ReactMdeTypes, DraftUtil } from "react-mde";
 
 const styles = {
   container: {
