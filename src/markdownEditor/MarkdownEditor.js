@@ -1,14 +1,12 @@
 import * as React from "react";
 import * as Showdown from "showdown";
 import Preview from "./Preview";
-import "react-mde/lib/styles/css/react-mde-all.css";
 import "draft-js/dist/Draft.css";
 import "./style.css";
 import Drawer from "./Drawer";
 import AppBar from "./AppBar";
 import Markdown from "./Markdown";
 import html2pdf from "html2pdf.js";
-import ReactMde, { ReactMdeTypes, DraftUtil } from "react-mde";
 
 const styles = {
   container: {
@@ -34,17 +32,11 @@ export default class MarkdownEditor extends React.Component {
     this.state = {
       current: 0,
       left: false,
-      scroll: false,
       fileList: [
         {
           id: 0,
-          title: "example 1",
-          text: "# test"
-        },
-        {
-          id: 1,
-          title: "example 2",
-          text: "**this is a good words**"
+          title: "Utitled Document.md",
+          text: "Welcome to use my markdown editor."
         }
       ]
     };
@@ -55,10 +47,10 @@ export default class MarkdownEditor extends React.Component {
   }
 
   handleValueChange = value => {
-    this.updateFileList(value);
+    this.updateFileListText(value);
   };
 
-  updateFileList(value) {
+  updateFileListText(value) {
     let newFileList = JSON.parse(JSON.stringify(this.state.fileList));
     newFileList.forEach((item, i) => {
       if (i === this.state.current) {
@@ -83,10 +75,11 @@ export default class MarkdownEditor extends React.Component {
   };
 
   exportPdf = () => {
-    var element = document.getElementById("content");
-    var opt = {
+    const { fileList, current } = this.state;
+    let element = document.getElementById("content");
+    let opt = {
       margin: 1,
-      filename: "markdown.pdf",
+      filename: fileList[current].title.replace(".md", ""),
       image: { type: "jpeg", quality: 0.98 },
       pagebreak: { mode: ["avoid-all", "css", "legacy"] },
       html2canvas: {
@@ -105,9 +98,9 @@ export default class MarkdownEditor extends React.Component {
   };
 
   exportMD = () => {
-    const content = document.querySelector(".public-DraftEditor-content")
-      .innerText;
-    this.download("markdown.md", content);
+    const { fileList, current } = this.state;
+    const content = document.querySelector(".CodeMirror-lines").innerText;
+    this.download(fileList[current].title, content);
   };
 
   download(filename, text) {
@@ -176,11 +169,21 @@ export default class MarkdownEditor extends React.Component {
     });
   }
 
-  updateScroll = value => {
-    this.setState({
-      scroll: value
-    });
+  updateTitle = e => {
+    this.updateFileListTitle(e.target.value);
   };
+
+  updateFileListTitle(value) {
+    let newFileList = JSON.parse(JSON.stringify(this.state.fileList));
+    newFileList.forEach((item, i) => {
+      if (i === this.state.current) {
+        item.title = value;
+      }
+    });
+    this.setState({
+      fileList: newFileList
+    });
+  }
 
   render() {
     const { fileList, left, current, scroll } = this.state;
@@ -204,19 +207,12 @@ export default class MarkdownEditor extends React.Component {
               handleValueChange={this.handleValueChange}
               value={fileList[current].text}
               current={current}
-              scroll={scroll}
-              updateScroll={this.updateScroll}
+              updateTitle={this.updateTitle}
             />
           ) : null}
         </div>
         <div style={styles.right}>
-          {current !== -1 ? (
-            <Preview
-              scroll={scroll}
-              updateScroll={this.updateScroll}
-              input={fileList[current].text}
-            />
-          ) : null}
+          {current !== -1 ? <Preview input={fileList[current].text} /> : null}
         </div>
       </div>
     );
