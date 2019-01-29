@@ -1,6 +1,7 @@
 import * as React from "react";
 import CodeMirror from "codemirror";
-import temp from "codemirror/mode/markdown/markdown";
+import markdownhlt from "codemirror/mode/markdown/markdown";
+import Input from "@material-ui/core/Input";
 
 export default class Markdown extends React.Component {
   componentDidMount() {
@@ -16,10 +17,12 @@ export default class Markdown extends React.Component {
   }
 
   render() {
-    const { title } = this.props;
+    const { title, updateTitle } = this.props;
     return (
       <div className="markdown-container">
-        <div className="markdown-title">{title}</div>
+        <div className="markdown-title">
+          <Input value={title} onChange={updateTitle} />
+        </div>
         <div className="markdown" />
       </div>
     );
