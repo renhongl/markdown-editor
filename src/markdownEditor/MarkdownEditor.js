@@ -186,7 +186,7 @@ export default class MarkdownEditor extends React.Component {
   }
 
   render() {
-    const { fileList, left, current, scroll } = this.state;
+    const { fileList, left, current } = this.state;
     return (
       <div style={styles.container}>
         <AppBar
