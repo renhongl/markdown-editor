@@ -2,6 +2,14 @@ language: node_js
 node_js:
 - 6.0.0
 
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $token  # Set in the settings page of your repository, as a secure variable
+  keep-history: true
+  on:
+    branch: master
+
 install: npm install
 
 before_script:
