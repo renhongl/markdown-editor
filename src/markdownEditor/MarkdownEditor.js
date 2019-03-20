@@ -36,7 +36,7 @@ export default class MarkdownEditor extends React.Component {
         {
           id: 0,
           title: "Utitled Document.md",
-          text: "Welcome to use my markdown editor."
+          text: "Welcome to use my markdown editor.test auto deploy"
         }
       ]
     };
