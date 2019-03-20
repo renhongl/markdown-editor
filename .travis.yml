@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+- 6.0.0
+
+install: npm install
+
+before_script:
+- git config --global user.name "renhongl"
+- git config --global user.email "1075220132@qq.com"
+
+
+script: npm run deploy
