@@ -2,19 +2,22 @@ language: node_js
 node_js:
 - 6.0.0
 
-deploy:
-  provider: pages
-  skip-cleanup: true
-  github-token: $token  # Set in the settings page of your repository, as a secure variable
-  keep-history: true
-  on:
-    branch: master
+# deploy:
+#   provider: pages
+#   skip-cleanup: true
+#   github-token: $token  # Set in the settings page of your repository, as a secure variable
+#   keep-history: true
+#   on:
+#     branch: master
+
+env:
+  global:
+    secure: $token
 
 install: npm install
 
 before_script:
 - git config --global user.name "renhongl"
 - git config --global user.email "1075220132@qq.com"
-
 
 script: npm run deploy
