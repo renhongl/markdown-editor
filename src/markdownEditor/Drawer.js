@@ -22,7 +22,8 @@ class TemporaryDrawer extends React.Component {
       fileList,
       switchCurrent,
       addDocment,
-      deleteAction
+      deleteAction,
+      saveDoc
     } = this.props;
     return (
       <div>
@@ -40,6 +41,7 @@ class TemporaryDrawer extends React.Component {
               toggleDrawer={toggleDrawer}
               addDocment={addDocment}
               deleteAction={deleteAction}
+              saveDoc={saveDoc}
             />
           </div>
         </Drawer>

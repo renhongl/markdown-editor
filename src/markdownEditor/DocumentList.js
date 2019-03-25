@@ -16,6 +16,9 @@ const styles = theme => ({
   },
   listItem: {
     marginTop: "10px"
+  },
+  button: {
+    marginLeft: 10
   }
 });
 
@@ -46,7 +49,7 @@ class CheckboxList extends React.Component {
   };
 
   render() {
-    const { classes, fileList, addDocment, deleteAction } = this.props;
+    const { classes, fileList, addDocment, deleteAction, saveDoc } = this.props;
     return (
       <List className={classes.root}>
         {fileList.map((item, index) => (
@@ -75,7 +78,15 @@ class CheckboxList extends React.Component {
             className={classes.button}
             onClick={addDocment}
           >
-            New Document
+            New
+          </Button>
+          <Button
+            variant="outlined"
+            color="primary"
+            className={classes.button}
+            onClick={saveDoc}
+          >
+            save
           </Button>
         </ListItem>
       </List>

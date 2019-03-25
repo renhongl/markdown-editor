@@ -29,7 +29,8 @@ function SimpleExpansionPanel(props) {
     switchCurrent,
     toggleDrawer,
     addDocment,
-    deleteAction
+    deleteAction,
+    saveDoc
   } = props;
   return (
     <div className={classes.root}>
@@ -44,6 +45,7 @@ function SimpleExpansionPanel(props) {
             toggleDrawer={toggleDrawer}
             addDocment={addDocment}
             deleteAction={deleteAction}
+            saveDoc={saveDoc}
           />
         </ExpansionPanelDetails>
       </ExpansionPanel>

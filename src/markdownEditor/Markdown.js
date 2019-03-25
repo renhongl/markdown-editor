@@ -1,6 +1,5 @@
 import * as React from "react";
 import CodeMirror from "codemirror";
-// import markdownhlt from "codemirror/mode/markdown/markdown";
 import Input from "@material-ui/core/Input";
 
 export default class Markdown extends React.Component {

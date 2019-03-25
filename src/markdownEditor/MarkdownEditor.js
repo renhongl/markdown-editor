@@ -7,6 +7,9 @@ import Drawer from "./Drawer";
 import AppBar from "./AppBar";
 import Markdown from "./Markdown";
 import html2pdf from "html2pdf.js";
+import Snackbar from "@material-ui/core/Snackbar";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
 
 const styles = {
   container: {
@@ -29,16 +32,24 @@ const styles = {
 export default class MarkdownEditor extends React.Component {
   constructor(props) {
     super(props);
+    let historyList = window.localStorage.getItem("pomeloMd");
+    if (historyList) {
+      historyList = JSON.parse(historyList);
+    } else {
+      historyList = null;
+    }
     this.state = {
       current: 0,
       left: false,
-      fileList: [
+      fileList: historyList || [
         {
           id: 0,
           title: "Utitled Document.md",
           text: "Welcome to use my markdown editor."
         }
-      ]
+      ],
+      snackOpen: false,
+      snackMsg: ""
     };
     this.converter = new Showdown.Converter({
       tables: true,
@@ -193,6 +204,12 @@ export default class MarkdownEditor extends React.Component {
     });
   };
 
+  saveDoc = () => {
+    let cache = JSON.stringify(this.state.fileList);
+    window.localStorage.setItem("pomeloMd", cache);
+    this.showMessage("Save Documents Successfully.");
+  };
+
   updateTitle = e => {
     this.updateFileListTitle(e.target.value);
   };
@@ -209,8 +226,27 @@ export default class MarkdownEditor extends React.Component {
     });
   }
 
+  closeSnack = () => {
+    this.setState({
+      snackOpen: false
+    });
+  };
+
+  showMessage = msg => {
+    this.setState(
+      {
+        snackMsg: msg
+      },
+      () => {
+        this.setState({
+          snackOpen: true
+        });
+      }
+    );
+  };
+
   render() {
-    const { fileList, left, current } = this.state;
+    const { fileList, left, current, snackOpen, snackMsg } = this.state;
     return (
       <div style={styles.container}>
         <AppBar
@@ -225,6 +261,7 @@ export default class MarkdownEditor extends React.Component {
           switchCurrent={this.switchCurrent}
           addDocment={this.addDocment}
           deleteAction={this.deleteAction}
+          saveDoc={this.saveDoc}
         />
         <div style={styles.left}>
           {current !== -1 ? (
@@ -240,6 +277,26 @@ export default class MarkdownEditor extends React.Component {
         <div style={styles.right}>
           {current !== -1 ? <Preview input={fileList[current].text} /> : null}
         </div>
+        <Snackbar
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left"
+          }}
+          open={snackOpen}
+          autoHideDuration={6000}
+          onClose={this.closeSnack}
+          message={<span id="message-id">{snackMsg}</span>}
+          action={[
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              onClick={this.closeSnack}
+            >
+              <CloseIcon />
+            </IconButton>
+          ]}
+        />
       </div>
     );
   }
