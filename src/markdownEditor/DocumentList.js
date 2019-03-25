@@ -6,12 +6,16 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
 import IconButton from "@material-ui/core/IconButton";
+import Button from "@material-ui/core/Button";
 
 const styles = theme => ({
   root: {
     width: "100%",
     maxWidth: 360,
     backgroundColor: theme.palette.background.paper
+  },
+  listItem: {
+    marginTop: "10px"
   }
 });
 
@@ -42,28 +46,38 @@ class CheckboxList extends React.Component {
   };
 
   render() {
-    const { classes, fileList } = this.props;
+    const { classes, fileList, addDocment, deleteAction } = this.props;
     return (
       <List className={classes.root}>
         {fileList.map((item, index) => (
           <ListItem
             key={item.id}
-            role={undefined}
+            className={classes.listItem}
             dense
             button
             onClick={this.handleToggle()}
           >
             <ListItemText primary={item.title} />
             <ListItemSecondaryAction>
-              <IconButton
-                aria-label="Comments"
-                onClick={this.handleAction(index)}
-              >
+              <IconButton onClick={this.handleAction(index)}>
                 <i className="material-icons">border_color</i>
+              </IconButton>
+              <IconButton onClick={() => deleteAction(item.id)}>
+                <i className="material-icons">delete</i>
               </IconButton>
             </ListItemSecondaryAction>
           </ListItem>
         ))}
+        <ListItem id="new-doc" dense button>
+          <Button
+            variant="outlined"
+            color="primary"
+            className={classes.button}
+            onClick={addDocment}
+          >
+            New Document
+          </Button>
+        </ListItem>
       </List>
     );
   }

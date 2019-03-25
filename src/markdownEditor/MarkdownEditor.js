@@ -36,7 +36,7 @@ export default class MarkdownEditor extends React.Component {
         {
           id: 0,
           title: "Utitled Document.md",
-          text: "Welcome to use my markdown editor.test auto deploy"
+          text: "Welcome to use my markdown editor."
         }
       ]
     };
@@ -169,6 +169,30 @@ export default class MarkdownEditor extends React.Component {
     });
   }
 
+  deleteAction = id => {
+    let newList = [...this.state.fileList];
+    if (newList.length === 1) {
+      return;
+    }
+    newList = newList.filter(item => item.id !== id);
+    this.setState({
+      fileList: newList
+    });
+  };
+
+  addDocment = () => {
+    this.setState({
+      fileList: [
+        ...this.state.fileList,
+        {
+          id: Math.random(),
+          title: "Utitled Document.md",
+          text: ""
+        }
+      ]
+    });
+  };
+
   updateTitle = e => {
     this.updateFileListTitle(e.target.value);
   };
@@ -199,6 +223,8 @@ export default class MarkdownEditor extends React.Component {
           toggleDrawer={this.toggleDrawer}
           fileList={fileList}
           switchCurrent={this.switchCurrent}
+          addDocment={this.addDocment}
+          deleteAction={this.deleteAction}
         />
         <div style={styles.left}>
           {current !== -1 ? (
