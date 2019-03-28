@@ -13,6 +13,11 @@
 
 .markdown {
   height: calc(100% - 44px);
+  letter-spacing: 0px;
+  line-height: 30px;
+  word-spacing: 0px;
+  font-family: monospace;
+  font-weight: 400;
 }
 
 .markdown-title {
@@ -52,7 +57,7 @@ p {
 }
 
 .preview table th {
-  height: 50px;
+  height: 25px;
   background: #fafafa;
   padding: 10px;
   border-bottom: 1px solid #e8e8e8;
@@ -66,7 +71,7 @@ p {
   border-bottom: 1px solid #e8e8e8;
   -webkit-transition: all 0.3s, border 0s;
   transition: all 0.3s, border 0s;
-  height: 50px;
+  height: 25px;
   padding: 10px;
   font-size: 14px;
   font-variant: tabular-nums;
@@ -83,6 +88,7 @@ p {
   width: 50%;
   float: left;
   display: flex;
+  color: #525252;
 }
 
 .preview-title-right {
@@ -97,10 +103,9 @@ p {
 
 .preview {
   overflow: auto;
-  width: 100%;
+  width: calc(100% - 20px);
   height: calc(100% - 44px);
-  padding-left: 5px;
-  padding-top: 2px;
+  padding: 10px;
 }
 
 .CodeMirror-sizer {

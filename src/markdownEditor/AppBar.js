@@ -8,6 +8,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
+import Button from "@material-ui/core/Button";
 
 const styles = {
   root: {
@@ -72,14 +73,14 @@ class MenuAppBar extends React.Component {
             </Typography>
             {auth && (
               <div>
-                <IconButton
+                <Button
                   aria-owns={open ? "menu-appbar" : undefined}
                   aria-haspopup="true"
                   onClick={this.handleMenu}
                   color="inherit"
                 >
-                  <i className="material-icons">import_export</i>
-                </IconButton>
+                  export as <i class="material-icons">arrow_drop_down</i>
+                </Button>
                 <Menu
                   id="menu-appbar"
                   anchorEl={anchorEl}
@@ -95,19 +96,19 @@ class MenuAppBar extends React.Component {
                   onClose={this.handleClose}
                 >
                   <MenuItem onClick={() => this.handleClose("pdf")}>
-                    EXPORT AS PDF
+                    PDF
                   </MenuItem>
                   <MenuItem onClick={() => this.handleClose("md")}>
-                    EXPORT AS MARKDOWN
+                    MARKDOWN
                   </MenuItem>
                 </Menu>
-                <IconButton
+                <Button
                   className={classes.button}
                   color="inherit"
                   onClick={this.goToGithub}
                 >
-                  <i class="material-icons">account_box</i>
-                </IconButton>
+                  github
+                </Button>
               </div>
             )}
           </Toolbar>
