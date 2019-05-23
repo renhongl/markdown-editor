@@ -20,6 +20,11 @@ const styles = {
   menuButton: {
     marginLeft: -12,
     marginRight: 20
+  },
+  openIcon: {
+    fontSize: "15px",
+    color: "#bfbfbf",
+    marginLeft: "4px"
   }
 };
 
@@ -69,7 +74,7 @@ class MenuAppBar extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" className={classes.grow}>
-              Markdown Editor by 柚子
+              Pomelo Editor --- One markdown editor implement by react
             </Typography>
             {auth && (
               <div>
@@ -108,6 +113,9 @@ class MenuAppBar extends React.Component {
                   onClick={this.goToGithub}
                 >
                   github
+                  <i className="material-icons" style={styles.openIcon}>
+                    open_in_new
+                  </i>
                 </Button>
               </div>
             )}

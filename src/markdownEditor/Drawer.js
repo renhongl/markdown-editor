@@ -34,7 +34,7 @@ class TemporaryDrawer extends React.Component {
             className={classes.list}
             onKeyDown={toggleDrawer}
           >
-            <h1 className={classes.title}>柚子</h1>
+            <h1 className={classes.title}>Pomelo</h1>
             <ExtendPanel
               fileList={fileList}
               switchCurrent={switchCurrent}
