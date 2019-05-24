@@ -259,14 +259,14 @@ export default class MarkdownEditor extends React.Component {
     });
   };
 
-  addDocment = (name, text) => {
+  addDocment = (e, name = "Utitled Document.md", text = "") => {
     this.setState({
       fileList: [
         ...this.state.fileList,
         {
           id: Math.random(),
-          title: name || "Utitled Document.md",
-          text: text || ""
+          title: name,
+          text: text
         }
       ]
     });
@@ -362,7 +362,7 @@ export default class MarkdownEditor extends React.Component {
     let reader = new FileReader();
     reader.onload = e => {
       let contents = e.target.result;
-      this.addDocment(file.name, contents);
+      this.addDocment(null, file.name, contents);
       this.switchCurrent(this.state.fileList.length - 1);
     };
     reader.readAsText(file);
