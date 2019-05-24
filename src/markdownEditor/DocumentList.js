@@ -6,7 +6,6 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
 import IconButton from "@material-ui/core/IconButton";
-import Button from "@material-ui/core/Button";
 
 const styles = theme => ({
   root: {
@@ -19,6 +18,10 @@ const styles = theme => ({
   },
   button: {
     marginLeft: 10
+  },
+  selectedItem: {
+    marginTop: "10px",
+    color: "red"
   }
 });
 
@@ -49,46 +52,29 @@ class CheckboxList extends React.Component {
   };
 
   render() {
-    const { classes, fileList, addDocment, deleteAction, saveDoc } = this.props;
+    const { classes, fileList, deleteAction, current } = this.props;
     return (
       <List className={classes.root}>
         {fileList.map((item, index) => (
           <ListItem
             key={item.id}
+            selected={index === current}
             className={classes.listItem}
             dense
             button
             onClick={this.handleToggle()}
           >
-            <ListItemText primary={item.title} />
+            <ListItemText
+              primary={item.title}
+              onClick={this.handleAction(index)}
+            />
             <ListItemSecondaryAction>
-              <IconButton onClick={this.handleAction(index)}>
-                <i className="material-icons">border_color</i>
-              </IconButton>
               <IconButton onClick={() => deleteAction(item.id)}>
                 <i className="material-icons">delete</i>
               </IconButton>
             </ListItemSecondaryAction>
           </ListItem>
         ))}
-        <ListItem id="new-doc" dense button>
-          <Button
-            variant="outlined"
-            color="primary"
-            className={classes.button}
-            onClick={addDocment}
-          >
-            New
-          </Button>
-          <Button
-            variant="outlined"
-            color="primary"
-            className={classes.button}
-            onClick={saveDoc}
-          >
-            save
-          </Button>
-        </ListItem>
       </List>
     );
   }

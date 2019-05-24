@@ -10,6 +10,17 @@ import html2pdf from "html2pdf.js";
 import Snackbar from "@material-ui/core/Snackbar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import AlertDialog from "./Dialog";
+import showdown from "showdown";
+
+const theme = createMuiTheme({
+  palette: {
+    primary: { main: "#616161" },
+    secondary: { main: "#d32f2f" }
+  },
+  typography: { useNextVariants: true }
+});
 
 const styles = {
   container: {
@@ -43,13 +54,15 @@ export default class MarkdownEditor extends React.Component {
       left: false,
       fileList: historyList || [
         {
-          id: 0,
+          id: Math.random(),
           title: "Utitled Document.md",
-          text: "Welcome to use my markdown editor."
+          text: "Welcome to use pomelo markdown editor."
         }
       ],
       snackOpen: false,
-      snackMsg: ""
+      snackMsg: "",
+      openDialog: false,
+      openId: null
     };
     this.converter = new Showdown.Converter({
       tables: true,
@@ -85,7 +98,7 @@ export default class MarkdownEditor extends React.Component {
     });
   };
 
-  exportPdf = () => {
+  previewPdf = () => {
     const { fileList, current } = this.state;
     let element = document.getElementById("content");
     let opt = {
@@ -105,13 +118,72 @@ export default class MarkdownEditor extends React.Component {
     html2pdf()
       .set(opt)
       .from(element)
+      .toPdf()
+      .get("pdf")
+      .then(function(pdf) {
+        window.open(pdf.output("bloburl"), "_blank");
+      });
+  };
+
+  exportPdf = () => {
+    const { fileList, current } = this.state;
+    let element = document.getElementById("content");
+    let opt = {
+      margin: 1,
+      filename: fileList[current].title.replace(".md", ""),
+      image: { type: "jpeg", quality: 0.98 },
+      pagebreak: { mode: ["avoid-all"] },
+      html2canvas: {
+        dpi: 192,
+        letterRendering: true,
+        useCORS: true,
+        imageTimeout: 0
+      },
+      useCORS: true,
+      jsPDF: { unit: "in", format: "letter", orientation: "portrait" }
+    };
+    html2pdf()
+      .set(opt)
+      .from(element)
       .save();
+  };
+
+  previewHtml = () => {
+    const { fileList, current } = this.state;
+    const converter = new showdown.Converter();
+    let html = converter.makeHtml(fileList[current].text);
+    let win = window.open();
+    win.document.open();
+    let content = `<title>${fileList[current].title.replace(
+      /.md/gi,
+      ".html"
+    )}</title>${html}`;
+    win.document.write(content);
+  };
+
+  previewMD = () => {
+    const { fileList, current } = this.state;
+    let win = window.open();
+    win.document.open();
+    let content = `<title>${fileList[current].title.replace(
+      /.md/gi,
+      ".md"
+    )}</title>${fileList[current].text
+      .replace(/\n|\r/gi, "<br/>")
+      .replace(/\t|\s/gi, "&nbsp;")}`;
+    win.document.write(content);
+  };
+
+  exportHtml = () => {
+    const { fileList, current } = this.state;
+    const converter = new showdown.Converter();
+    const html = converter.makeHtml(fileList[current].text);
+    this.download(fileList[current].title.replace(".md", ".html"), html);
   };
 
   exportMD = () => {
     const { fileList, current } = this.state;
-    const content = document.querySelector(".CodeMirror-lines").innerText;
-    this.download(fileList[current].title, content);
+    this.download(fileList[current].title, fileList[current].text);
   };
 
   download(filename, text) {
@@ -181,24 +253,20 @@ export default class MarkdownEditor extends React.Component {
   }
 
   deleteAction = id => {
-    let newList = [...this.state.fileList];
-    if (newList.length === 1) {
-      return;
-    }
-    newList = newList.filter(item => item.id !== id);
     this.setState({
-      fileList: newList
+      openDialog: true,
+      openId: id
     });
   };
 
-  addDocment = () => {
+  addDocment = (name, text) => {
     this.setState({
       fileList: [
         ...this.state.fileList,
         {
           id: Math.random(),
-          title: "Utitled Document.md",
-          text: ""
+          title: name || "Utitled Document.md",
+          text: text || ""
         }
       ]
     });
@@ -232,6 +300,34 @@ export default class MarkdownEditor extends React.Component {
     });
   };
 
+  toggleDialog = confirmed => {
+    this.setState({
+      openDialog: !this.state.openDialog
+    });
+    if (confirmed) {
+      let newList = [...this.state.fileList];
+      newList = newList.filter(item => item.id !== this.state.openId);
+      if (newList.length === 0) {
+        newList = [
+          {
+            id: Math.random(),
+            title: "Utitled Document.md",
+            text: "Welcome to use pomelo markdown editor."
+          }
+        ];
+      }
+      this.setState(
+        {
+          fileList: newList,
+          current: 0
+        },
+        () => {
+          this.switchCurrent(0);
+        }
+      );
+    }
+  };
+
   showMessage = msg => {
     this.setState(
       {
@@ -245,59 +341,124 @@ export default class MarkdownEditor extends React.Component {
     );
   };
 
+  openFullScreen = () => {
+    let elem = document.querySelector(".markdown");
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.mozRequestFullScreen) {
+      elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) {
+      elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+      elem.msRequestFullscreen();
+    }
+  };
+
+  importMD = e => {
+    let file = e.target.files[0];
+    if (!file) {
+      return;
+    }
+    let reader = new FileReader();
+    reader.onload = e => {
+      let contents = e.target.result;
+      this.addDocment(file.name, contents);
+      this.switchCurrent(this.state.fileList.length - 1);
+    };
+    reader.readAsText(file);
+  };
+
   render() {
-    const { fileList, left, current, snackOpen, snackMsg } = this.state;
+    const {
+      fileList,
+      left,
+      current,
+      snackOpen,
+      snackMsg,
+      openDialog,
+      openId
+    } = this.state;
+    let deleteId = 0;
+    fileList.forEach((item, index) => {
+      if (item.id === openId) {
+        deleteId = index;
+      }
+    });
+    const DialogContent = () => {
+      return (
+        <div>
+          {fileList[deleteId].title}
+          <br />
+          Words Count: {fileList[deleteId].text.split(" ").length}
+        </div>
+      );
+    };
     return (
-      <div style={styles.container}>
-        <AppBar
-          toggleDrawer={this.toggleDrawer}
-          exportMD={this.exportMD}
-          exportPdf={this.exportPdf}
-        />
-        <Drawer
-          open={left}
-          toggleDrawer={this.toggleDrawer}
-          fileList={fileList}
-          switchCurrent={this.switchCurrent}
-          addDocment={this.addDocment}
-          deleteAction={this.deleteAction}
-          saveDoc={this.saveDoc}
-        />
-        <div style={styles.left}>
-          {current !== -1 ? (
-            <Markdown
-              title={fileList[current].title}
-              handleValueChange={this.handleValueChange}
-              value={fileList[current].text}
-              current={current}
-              updateTitle={this.updateTitle}
-            />
-          ) : null}
+      <MuiThemeProvider theme={theme}>
+        <div style={styles.container}>
+          <AlertDialog
+            title="Are you sure you want to delete this document?"
+            content={<DialogContent />}
+            open={openDialog}
+            toggleDialog={this.toggleDialog}
+          />
+          <AppBar
+            toggleDrawer={this.toggleDrawer}
+            exportMD={this.exportMD}
+            exportPdf={this.exportPdf}
+            exportHtml={this.exportHtml}
+            previewHtml={this.previewHtml}
+            previewPdf={this.previewPdf}
+            previewMD={this.previewMD}
+            importMD={this.importMD}
+          />
+          <Drawer
+            open={left}
+            toggleDrawer={this.toggleDrawer}
+            fileList={fileList}
+            switchCurrent={this.switchCurrent}
+            addDocment={this.addDocment}
+            deleteAction={this.deleteAction}
+            saveDoc={this.saveDoc}
+            current={current}
+          />
+          <div style={styles.left}>
+            {current !== -1 ? (
+              <Markdown
+                title={fileList[current].title}
+                handleValueChange={this.handleValueChange}
+                value={fileList[current].text}
+                current={current}
+                updateTitle={this.updateTitle}
+                openFullScreen={this.openFullScreen}
+              />
+            ) : null}
+          </div>
+          <div style={styles.right}>
+            {current !== -1 ? <Preview input={fileList[current].text} /> : null}
+          </div>
+          <Snackbar
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left"
+            }}
+            open={snackOpen}
+            autoHideDuration={6000}
+            onClose={this.closeSnack}
+            message={<span id="message-id">{snackMsg}</span>}
+            action={[
+              <IconButton
+                key="close"
+                aria-label="Close"
+                color="inherit"
+                onClick={this.closeSnack}
+              >
+                <CloseIcon />
+              </IconButton>
+            ]}
+          />
         </div>
-        <div style={styles.right}>
-          {current !== -1 ? <Preview input={fileList[current].text} /> : null}
-        </div>
-        <Snackbar
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "left"
-          }}
-          open={snackOpen}
-          autoHideDuration={6000}
-          onClose={this.closeSnack}
-          message={<span id="message-id">{snackMsg}</span>}
-          action={[
-            <IconButton
-              key="close"
-              aria-label="Close"
-              color="inherit"
-              onClick={this.closeSnack}
-            >
-              <CloseIcon />
-            </IconButton>
-          ]}
-        />
-      </div>
+      </MuiThemeProvider>
     );
   }
 }

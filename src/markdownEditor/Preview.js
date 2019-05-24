@@ -30,7 +30,7 @@ export default class Preview extends React.Component {
     return (
       <div className="preview-container">
         <div className="preview-title">
-          <div className="preview-title-left">Preview</div>
+          <div className="preview-title-left">PREVIEW</div>
         </div>
         <div className="preview">
           <div id="content" dangerouslySetInnerHTML={{ __html: result }} />

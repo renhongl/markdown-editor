@@ -31,15 +31,44 @@ const styles = {
 class MenuAppBar extends React.Component {
   state = {
     auth: true,
-    anchorEl: null
+    anchorEl: null,
+    previewAnchorEl: null,
+    importAnchorEl: null
   };
 
-  handleChange = event => {
-    this.setState({ auth: event.target.checked });
+  handleImportClose = (type, e) => {
+    this.setState({ importAnchorEl: null });
+    if (type && type === "md") {
+      this.props.importMD(e);
+    }
+    if (type && type === "html") {
+      this.props.previewHtml();
+    }
+  };
+
+  handleImport = event => {
+    this.setState({ importAnchorEl: event.currentTarget });
+  };
+
+  handlePreivew = event => {
+    this.setState({ previewAnchorEl: event.currentTarget });
   };
 
   handleMenu = event => {
     this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handlePreviewClose = type => {
+    this.setState({ previewAnchorEl: null });
+    if (type && type === "pdf") {
+      this.props.previewPdf();
+    }
+    if (type && type === "md") {
+      this.props.previewMD();
+    }
+    if (type && type === "html") {
+      this.props.previewHtml();
+    }
   };
 
   handleClose = type => {
@@ -50,6 +79,9 @@ class MenuAppBar extends React.Component {
     if (type && type === "md") {
       this.props.exportMD();
     }
+    if (type && type === "html") {
+      this.props.exportHtml();
+    }
   };
 
   goToGithub = () => {
@@ -58,8 +90,10 @@ class MenuAppBar extends React.Component {
 
   render() {
     const { classes, toggleDrawer } = this.props;
-    const { auth, anchorEl } = this.state;
+    const { auth, anchorEl, previewAnchorEl, importAnchorEl } = this.state;
     const open = Boolean(anchorEl);
+    const preivewOpen = Boolean(previewAnchorEl);
+    const importOpen = Boolean(importAnchorEl);
 
     return (
       <div className={classes.root}>
@@ -74,17 +108,86 @@ class MenuAppBar extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" className={classes.grow}>
-              Pomelo Editor --- One markdown editor implement by react
+              Pomelo Markdown Editor
             </Typography>
             {auth && (
               <div>
+                <Button
+                  aria-owns={importOpen ? "import-menu" : undefined}
+                  aria-haspopup="true"
+                  onClick={this.handleImport}
+                  color="inherit"
+                >
+                  Import from <i className="material-icons">arrow_drop_down</i>
+                </Button>
+                <Menu
+                  id="import-menu"
+                  anchorEl={importAnchorEl}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right"
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right"
+                  }}
+                  open={importOpen}
+                  onClose={this.handleImportClose}
+                >
+                  {/* <MenuItem onClick={() => this.handleImportClose("html")}>
+                    HTML File
+                  </MenuItem> */}
+                  <MenuItem>
+                    <div className="import-md-btn" containerelement="label">
+                      <input
+                        type="file"
+                        onChange={e => this.handleImportClose("md", e)}
+                      />
+                      MARKDOWN FILE
+                    </div>
+                  </MenuItem>
+                </Menu>
+
+                <Button
+                  aria-owns={preivewOpen ? "preview-menu" : undefined}
+                  aria-haspopup="true"
+                  onClick={this.handlePreivew}
+                  color="inherit"
+                >
+                  Preivew as <i className="material-icons">arrow_drop_down</i>
+                </Button>
+                <Menu
+                  id="preview-menu"
+                  anchorEl={previewAnchorEl}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right"
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right"
+                  }}
+                  open={preivewOpen}
+                  onClose={this.handlePreviewClose}
+                >
+                  <MenuItem onClick={() => this.handlePreviewClose("pdf")}>
+                    PDF
+                  </MenuItem>
+                  <MenuItem onClick={() => this.handlePreviewClose("html")}>
+                    HTML
+                  </MenuItem>
+                  <MenuItem onClick={() => this.handlePreviewClose("md")}>
+                    MARKDOWN
+                  </MenuItem>
+                </Menu>
+
                 <Button
                   aria-owns={open ? "menu-appbar" : undefined}
                   aria-haspopup="true"
                   onClick={this.handleMenu}
                   color="inherit"
                 >
-                  export as <i class="material-icons">arrow_drop_down</i>
+                  export as <i className="material-icons">arrow_drop_down</i>
                 </Button>
                 <Menu
                   id="menu-appbar"
@@ -102,6 +205,9 @@ class MenuAppBar extends React.Component {
                 >
                   <MenuItem onClick={() => this.handleClose("pdf")}>
                     PDF
+                  </MenuItem>
+                  <MenuItem onClick={() => this.handleClose("html")}>
+                    HTML
                   </MenuItem>
                   <MenuItem onClick={() => this.handleClose("md")}>
                     MARKDOWN

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import ExtendPanel from "./ExtendPanel";
+import Button from "@material-ui/core/Button";
 
 const styles = {
   list: {
@@ -10,6 +11,11 @@ const styles = {
   },
   title: {
     paddingLeft: "20px"
+  },
+  button: {
+    display: "block",
+    width: "90%",
+    margin: "10px auto"
   }
 };
 
@@ -23,7 +29,8 @@ class TemporaryDrawer extends React.Component {
       switchCurrent,
       addDocment,
       deleteAction,
-      saveDoc
+      saveDoc,
+      current
     } = this.props;
     return (
       <div>
@@ -34,7 +41,7 @@ class TemporaryDrawer extends React.Component {
             className={classes.list}
             onKeyDown={toggleDrawer}
           >
-            <h1 className={classes.title}>Pomelo</h1>
+            <h4 className={classes.title}>Pomelo Markdown Editor</h4>
             <ExtendPanel
               fileList={fileList}
               switchCurrent={switchCurrent}
@@ -42,7 +49,24 @@ class TemporaryDrawer extends React.Component {
               addDocment={addDocment}
               deleteAction={deleteAction}
               saveDoc={saveDoc}
+              current={current}
             />
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.button}
+              onClick={addDocment}
+            >
+              New Document
+            </Button>
+            <Button
+              variant="outlined"
+              color="primary"
+              className={classes.button}
+              onClick={saveDoc}
+            >
+              Save Session
+            </Button>
           </div>
         </Drawer>
       </div>

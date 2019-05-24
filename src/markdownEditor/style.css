@@ -26,6 +26,7 @@
   line-height: 44px;
   padding-left: 10px;
   border-right: 1px solid #d6d6d6;
+  position: relative;
 }
 
 .CodeMirror {
@@ -88,7 +89,8 @@ p {
   width: 50%;
   float: left;
   display: flex;
-  color: #525252;
+  color: #949494;
+  font-size: 14px;
 }
 
 .preview-title-right {
@@ -114,4 +116,46 @@ p {
 
 .CodeMirror-gutter.CodeMirror-linenumbers {
   width: 50px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #f5f5f5;
+  height: 6px;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #616161;
+}
+
+.dialog-content {
+  line-height: 30px;
+  color: #8a8a8a;
+  font-size: 14px;
+}
+
+.full-screen-btn {
+  position: absolute !important;
+  right: 0;
+}
+
+.import-md-btn {
+  width: 150px;
+  position: relative;
+}
+
+.import-md-btn input {
+  opacity: 0;
+  width: 150px;
+  display: inline-block;
+  position: absolute;
+  left: 0;
 }
