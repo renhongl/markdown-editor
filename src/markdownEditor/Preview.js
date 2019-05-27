@@ -71,9 +71,9 @@ export default class Preview extends React.Component {
       borderRadius: "3px"
     };
     let inlineCodeStyles = {
-      color: "red",
-      fontFamily: "cursive",
-      fontStyle: "italic"
+      background: "#ececec",
+      padding: "5px",
+      borderRadius: "3px"
     };
     let yinYongStyles = {
       borderLeft: "3px solid #616161",
@@ -96,7 +96,13 @@ export default class Preview extends React.Component {
       );
     }
     let inlineCodeArr = content.querySelectorAll("p code");
+    let inlineCodeArr2 = content.querySelectorAll("li code");
     for (let inlineCode of inlineCodeArr) {
+      Object.keys(inlineCodeStyles).forEach(
+        key => (inlineCode.style[key] = inlineCodeStyles[key])
+      );
+    }
+    for (let inlineCode of inlineCodeArr2) {
       Object.keys(inlineCodeStyles).forEach(
         key => (inlineCode.style[key] = inlineCodeStyles[key])
       );

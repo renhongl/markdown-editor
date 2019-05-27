@@ -40,11 +40,11 @@
 }
 
 .activeline {
-  background: #d32f2f0f;
+  background: #61616117;
 }
 
 .activeline + div .CodeMirror-linenumber {
-  background: #d32f2f2e;
+  background: #61616133;
 }
 
 /* div,
@@ -118,8 +118,8 @@ p {
 
 .preview {
   overflow: auto;
-  width: calc(100% - 20px);
-  height: calc(100% - 44px);
+  width: calc(100% - 30px);
+  height: calc(100% - 75px);
   padding: 15px;
 }
 
@@ -171,4 +171,14 @@ p {
   display: inline-block;
   position: absolute;
   left: 0;
+}
+
+.document-list {
+  box-shadow: none;
+}
+
+.document-list > div {
+  background: #30303052;
+  width: 100%;
+  box-shadow: none;
 }

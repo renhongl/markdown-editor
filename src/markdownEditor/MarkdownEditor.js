@@ -152,14 +152,18 @@ export default class MarkdownEditor extends React.Component {
 
   previewHtml = () => {
     const { fileList, current } = this.state;
-    const converter = new showdown.Converter();
-    let html = converter.makeHtml(fileList[current].text);
+    // const converter = new showdown.Converter();
+    // let html = converter.makeHtml(fileList[current].text);
+    let previewHtml = document.querySelector(".preview");
+    // let cont = previewHtml.getElementById("content");
+    // cont.style.width = "60%";
+    // cont.style.margin = "0 auto";
     let win = window.open();
     win.document.open();
     let content = `<title>${fileList[current].title.replace(
       /.md/gi,
       ".html"
-    )}</title>${html}`;
+    )}</title>${previewHtml.innerHTML}`;
     win.document.write(content);
   };
 
@@ -178,9 +182,13 @@ export default class MarkdownEditor extends React.Component {
 
   exportHtml = () => {
     const { fileList, current } = this.state;
-    const converter = new showdown.Converter();
-    const html = converter.makeHtml(fileList[current].text);
-    this.download(fileList[current].title.replace(".md", ".html"), html);
+    // const converter = new showdown.Converter();
+    // const html = converter.makeHtml(fileList[current].text);
+    let previewHtml = document.querySelector(".preview");
+    this.download(
+      fileList[current].title.replace(".md", ".html"),
+      previewHtml.innerHTML
+    );
   };
 
   exportMD = () => {
