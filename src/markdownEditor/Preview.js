@@ -34,7 +34,6 @@ export default class Preview extends React.Component {
 
   addStyles() {
     let contentStyles = {
-      fontFamily: "Source Sans Pro,Helvetica Neue,Helvetica,Arial,sans-serif",
       color: "#464646",
       fontFamily: "-webkit-body"
     };
@@ -48,15 +47,13 @@ export default class Preview extends React.Component {
       borderBottom: "1px solid #e8e8e8",
       textAlign: "left",
       color: "rgba(0, 0, 0, 0.85)",
-      fontWeight: 500,
-      borderBottom: "1px solid #e8e8e8"
+      fontWeight: 500
     };
     let tdStyles = {
       borderBottom: "1px solid #e8e8e8",
       height: "25px",
       padding: "10px",
       fontSize: "14px",
-      // fontVariant: "tabular-nums",
       lineHeight: "1.5",
       color: "rgba(0, 0, 0, 0.65)",
       boxSizing: "border-b"
