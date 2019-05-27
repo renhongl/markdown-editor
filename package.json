@@ -9,6 +9,7 @@
     "@material-ui/core": "3.9.0",
     "@material-ui/icons": "3.0.2",
     "codemirror": "5.42.2",
+    "codemirror-activine": "0.0.1",
     "draft-js": "0.10.5",
     "gh-pages": "2.0.1",
     "highlight.js": "9.13.1",

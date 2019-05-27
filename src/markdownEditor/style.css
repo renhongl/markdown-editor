@@ -18,6 +18,7 @@
   word-spacing: 0px;
   font-family: monospace;
   font-weight: 400;
+  font-size: 1.1rem;
 }
 
 .markdown-title {
@@ -29,16 +30,28 @@
   position: relative;
 }
 
+.CodeMirror-cursor {
+  border-left: 2px solid #000;
+}
+
 .CodeMirror {
   height: 100%;
   padding: 0;
 }
 
-div,
+.activeline {
+  background: #d32f2f0f;
+}
+
+.activeline + div .CodeMirror-linenumber {
+  background: #d32f2f2e;
+}
+
+/* div,
 p {
   margin: 0;
   padding: 0;
-}
+} */
 
 .preview-title {
   height: 44px;
@@ -53,7 +66,7 @@ p {
   background: #fff;
 }
 
-.preview table {
+/* .preview table {
   border-spacing: 0;
 }
 
@@ -83,7 +96,7 @@ p {
 
 .preview table tr:hover {
   background: #e6f7ff;
-}
+} */
 
 .preview-title-left {
   width: 50%;
@@ -107,7 +120,7 @@ p {
   overflow: auto;
   width: calc(100% - 20px);
   height: calc(100% - 44px);
-  padding: 10px;
+  padding: 15px;
 }
 
 .CodeMirror-sizer {

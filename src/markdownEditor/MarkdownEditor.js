@@ -13,6 +13,8 @@ import CloseIcon from "@material-ui/icons/Close";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import AlertDialog from "./Dialog";
 import showdown from "showdown";
+import { defaultText } from "./config";
+import "./theme.css";
 
 const theme = createMuiTheme({
   palette: {
@@ -56,7 +58,7 @@ export default class MarkdownEditor extends React.Component {
         {
           id: Math.random(),
           title: "Utitled Document.md",
-          text: "Welcome to use pomelo markdown editor."
+          text: defaultText
         }
       ],
       snackOpen: false,
@@ -102,10 +104,10 @@ export default class MarkdownEditor extends React.Component {
     const { fileList, current } = this.state;
     let element = document.getElementById("content");
     let opt = {
-      margin: 1,
+      margin: [0.5, 0.5, 0.5, 0.5],
       filename: fileList[current].title.replace(".md", ""),
       image: { type: "jpeg", quality: 0.98 },
-      pagebreak: { mode: ["avoid-all", "css", "legacy"] },
+      pagebreak: { mode: ["avoid-all"] },
       html2canvas: {
         dpi: 192,
         letterRendering: true,
@@ -129,7 +131,7 @@ export default class MarkdownEditor extends React.Component {
     const { fileList, current } = this.state;
     let element = document.getElementById("content");
     let opt = {
-      margin: 1,
+      margin: [0.5, 0.5, 0.5, 0.5],
       filename: fileList[current].title.replace(".md", ""),
       image: { type: "jpeg", quality: 0.98 },
       pagebreak: { mode: ["avoid-all"] },
@@ -259,7 +261,7 @@ export default class MarkdownEditor extends React.Component {
     });
   };
 
-  addDocment = (e, name = "Utitled Document.md", text = "") => {
+  addDocment = (e, name = "Utitled Document.md", text = defaultText) => {
     this.setState({
       fileList: [
         ...this.state.fileList,
@@ -312,7 +314,7 @@ export default class MarkdownEditor extends React.Component {
           {
             id: Math.random(),
             title: "Utitled Document.md",
-            text: "Welcome to use pomelo markdown editor."
+            text: defaultText
           }
         ];
       }
