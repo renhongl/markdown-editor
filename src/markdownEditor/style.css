@@ -174,11 +174,13 @@ p {
 }
 
 .document-list {
+  width: 90%;
   box-shadow: none;
+  margin: 0 auto !important;
 }
 
 .document-list > div {
-  background: #30303052;
-  width: 100%;
+  /* background: #30303052; */
+  /* width: 90%; */
   box-shadow: none;
 }

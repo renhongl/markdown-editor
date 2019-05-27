@@ -12,7 +12,6 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import AlertDialog from "./Dialog";
-import showdown from "showdown";
 import { defaultText } from "./config";
 import "./theme.css";
 
@@ -152,12 +151,7 @@ export default class MarkdownEditor extends React.Component {
 
   previewHtml = () => {
     const { fileList, current } = this.state;
-    // const converter = new showdown.Converter();
-    // let html = converter.makeHtml(fileList[current].text);
     let previewHtml = document.querySelector(".preview");
-    // let cont = previewHtml.getElementById("content");
-    // cont.style.width = "60%";
-    // cont.style.margin = "0 auto";
     let win = window.open();
     win.document.open();
     let content = `<title>${fileList[current].title.replace(
@@ -182,8 +176,6 @@ export default class MarkdownEditor extends React.Component {
 
   exportHtml = () => {
     const { fileList, current } = this.state;
-    // const converter = new showdown.Converter();
-    // const html = converter.makeHtml(fileList[current].text);
     let previewHtml = document.querySelector(".preview");
     this.download(
       fileList[current].title.replace(".md", ".html"),

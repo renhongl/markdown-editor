@@ -11,11 +11,10 @@ export const defaultText = `# 标题一
 >引用
 >>嵌套引用
 ***
-![blockchain](https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=702257389,1274025419&fm=27&gp=0.jpg "区块链")
+![blockchain](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-C3Za2JViaqhq5bUu1Axdotjn7dDLP0d9_ilIMzFz9abevR9vQQ)
 ---
 [超链接名](超链接地址 "超链接title")title可加可不加
 <a href="https://www.jianshu.com/u/1f5ac0cf6a8b" target="_blank">简书</a>
-* 无序列表
 * 无序列表
 * 无序列表
 	* 无序列表
@@ -23,7 +22,6 @@ export const defaultText = `# 标题一
     * 无序列表
 
 1. 有序列表
-2. 有序列表
 2. 有序列表
 	1. 嵌套列表
     1. 嵌套列表
