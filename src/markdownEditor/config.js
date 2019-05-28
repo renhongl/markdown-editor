@@ -1,48 +1,42 @@
-export const defaultText = `# 标题一
-## 标题二
-### 标题三
-#### 标题四
-##### 标题五
-###### 标题六
-**加粗**
-*斜体*
-***斜体加粗***
-~~删除线~~
->引用
->>嵌套引用
-***
-![blockchain](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-C3Za2JViaqhq5bUu1Axdotjn7dDLP0d9_ilIMzFz9abevR9vQQ)
----
-[超链接名](超链接地址 "超链接title")title可加可不加
-<a href="https://www.jianshu.com/u/1f5ac0cf6a8b" target="_blank">简书</a>
-* 无序列表
-* 无序列表
-	* 无序列表
-    * 无序列表
-    * 无序列表
+export const defaultText = `# Markdown Editor
 
-1. 有序列表
-2. 有序列表
-	1. 嵌套列表
-    1. 嵌套列表
-    1. 嵌套列表
-    
-表头|表头|表头
----|:--:|---:
-内容|内容|内容
-内容|内容|内容
-* 第二行分割表头和内容。
-* "-"有一个就行，为了对齐，多加了几个
-* 文字默认居左
-* 两边加":"表示文字居中
-* 右边加":"表示文字居右
-* 注：原生的语法两边都要用 | 包起来。此处省略
+<img src="https://renhongl.github.io/images/logo.png" width="40px"/>
 
-单行代码：
-\`npm install && npm run build\`
-\`\`\`js
-  function log() {
-  	console.log('test');
-  }
-\`\`\`
+Pomelo Markdown Editor is a full front-end side, react powered html5 markdown editor.
+
+* Type some markdown on the left
+* See preview on the right
+
+# New Features
+* Drag markdown file to left, automatic get content
+* Import from markdown file, get all data from your local
+* Export as pdf, html and markdown
+* Change theme and other settings by click setting button
+
+You can also:
+
+* Save your document to local
+* Get help from markdown syntax help document
+* Swtich to full screen to focus your writing
+
+# Tech
+Pomelo Markdown Editor uses a number of open source projects to work properly:
+* [React]() - HTML enhanced for web apps
+* [CodeMirror]() - Versatile text edior
+* [html2pdf]() - Client-side pdf convert tool
+* [GitPages]() - Code store and deploy
+* [markdown-it]() - Markdown preview library
+* [travis]() - Automatic test and deploy
+
+# Installation
+Pomelo Markdown Editor requires [Node.js]() v8+ to run.
+* Install dependence: \`npm install\`
+* Build app: \`npm run build\`
+
+# Todos
+* Add color customise for content
+* Add full screen for whole web
+* Explor save to third party service
+# License
+MIT
 `;

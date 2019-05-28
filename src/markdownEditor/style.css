@@ -157,7 +157,20 @@ p {
 
 .full-screen-btn {
   position: absolute !important;
-  right: 0;
+  right: 6px;
+  width: 30px !important;
+  height: 30px !important;
+  padding: 0 !important;
+  top: 8px;
+}
+
+.help-btn {
+  position: absolute !important;
+  right: 46px;
+  width: 30px !important;
+  height: 30px !important;
+  padding: 0 !important;
+  top: 8px;
 }
 
 .import-md-btn {
@@ -183,4 +196,29 @@ p {
   /* background: #30303052; */
   /* width: 90%; */
   box-shadow: none;
+}
+
+span.help-key {
+  color: #040404;
+}
+
+.setting-icon {
+  padding: 10px !important;
+  margin-left: 5px;
+}
+
+.setting-icon .material-icons {
+  font-size: 1.3rem;
+}
+
+.setting-value {
+  display: inline-block;
+  float: right;
+  margin-right: 50px;
+  position: relative;
+}
+
+.setting-row {
+  height: 40px;
+  line-height: 40px;
 }

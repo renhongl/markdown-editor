@@ -5,9 +5,34 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
+const getActionBtn = (type, toggleDialog) => {
+  if (type === "help") {
+    return (
+      <Button onClick={() => toggleDialog(false)} color="primary">
+        Cancel
+      </Button>
+    );
+  }
+  return (
+    <React.Fragment>
+      <Button onClick={() => toggleDialog(false)} color="primary">
+        Cancel
+      </Button>
+      <Button
+        variant="contained"
+        onClick={() => toggleDialog(true)}
+        color="secondary"
+        autoFocus
+      >
+        Yes
+      </Button>
+    </React.Fragment>
+  );
+};
+
 class AlertDialog extends React.Component {
   render() {
-    const { title, content, open, toggleDialog } = this.props;
+    const { title, content, open, toggleDialog, type } = this.props;
     return (
       <div>
         <Dialog
@@ -18,19 +43,7 @@ class AlertDialog extends React.Component {
         >
           <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
           <DialogContent className="dialog-content">{content}</DialogContent>
-          <DialogActions>
-            <Button onClick={() => toggleDialog(false)} color="primary">
-              Cancel
-            </Button>
-            <Button
-              variant="contained"
-              onClick={() => toggleDialog(true)}
-              color="secondary"
-              autoFocus
-            >
-              Yes
-            </Button>
-          </DialogActions>
+          <DialogActions>{getActionBtn(type, toggleDialog)}</DialogActions>
         </Dialog>
       </div>
     );

@@ -15,14 +15,6 @@ import AlertDialog from "./Dialog";
 import { defaultText } from "./config";
 import "./theme.css";
 
-const theme = createMuiTheme({
-  palette: {
-    primary: { main: "#616161" },
-    secondary: { main: "#d32f2f" }
-  },
-  typography: { useNextVariants: true }
-});
-
 const styles = {
   container: {
     width: "100%",
@@ -41,7 +33,29 @@ const styles = {
   }
 };
 
+let settingStr = window.localStorage.getItem("pomeloSettings");
+let settingObj = settingStr ? JSON.parse(settingStr) : {};
+
+let defaultPrimary = settingObj.primary || "#555555";
+let defaultSecondary = settingObj.secondary || "#d32f2f";
+let defaultAutoSave = settingObj.autoSave || false;
+
+const th = createMuiTheme({
+  palette: {
+    primary: { main: defaultPrimary },
+    secondary: { main: defaultSecondary }
+  },
+  typography: { useNextVariants: true }
+});
+
 export default class MarkdownEditor extends React.Component {
+  state = {
+    theme: null,
+    primary: defaultPrimary,
+    secondary: defaultSecondary,
+    autoSave: defaultAutoSave
+  };
+
   constructor(props) {
     super(props);
     let historyList = window.localStorage.getItem("pomeloMd");
@@ -91,7 +105,59 @@ export default class MarkdownEditor extends React.Component {
     setTimeout(() => {
       this.handleEvents();
     }, 700);
+    if (this.state.autoSave) {
+      this.autoSaveDoc();
+    }
   }
+
+  autoSaveDoc() {
+    if (this.saveTimer) {
+      clearInterval(this.saveTimer);
+    }
+    this.saveTimer = setInterval(() => {
+      this.saveDoc();
+    }, 30000);
+  }
+
+  updateTheme() {
+    const theme = createMuiTheme({
+      palette: {
+        primary: { main: this.state.primary || defaultPrimary },
+        secondary: { main: this.state.secondary || defaultSecondary }
+      },
+      typography: { useNextVariants: true }
+    });
+    this.setState({
+      theme
+    });
+  }
+
+  saveToLocalStorage(key, value) {
+    let settingStr = window.localStorage.getItem("pomeloSettings");
+    let settingObj = settingStr ? JSON.parse(settingStr) : {};
+    settingObj[key] = value;
+    window.localStorage.setItem("pomeloSettings", JSON.stringify(settingObj));
+  }
+
+  handleSettingChange = (key, value, type) => {
+    this.setState(
+      {
+        [key]: value
+      },
+      () => {
+        if (type !== "settings") {
+          this.updateTheme();
+        }
+        this.saveToLocalStorage(key, value);
+        if (key === "autoSave" && value) {
+          this.autoSaveDoc();
+        }
+        if (key === "autoSave" && !value) {
+          clearInterval(this.saveTimer);
+        }
+      }
+    );
+  };
 
   toggleDrawer = () => {
     this.setState({
@@ -378,7 +444,10 @@ export default class MarkdownEditor extends React.Component {
       snackOpen,
       snackMsg,
       openDialog,
-      openId
+      openId,
+      theme,
+      primary,
+      autoSave
     } = this.state;
     let deleteId = 0;
     fileList.forEach((item, index) => {
@@ -396,7 +465,7 @@ export default class MarkdownEditor extends React.Component {
       );
     };
     return (
-      <MuiThemeProvider theme={theme}>
+      <MuiThemeProvider theme={theme || th}>
         <div style={styles.container}>
           <AlertDialog
             title="Are you sure you want to delete this document?"
@@ -413,6 +482,9 @@ export default class MarkdownEditor extends React.Component {
             previewPdf={this.previewPdf}
             previewMD={this.previewMD}
             importMD={this.importMD}
+            handleSettingChange={this.handleSettingChange}
+            primaryColor={primary || defaultPrimary}
+            autoSave={autoSave === undefined ? defaultAutoSave : autoSave}
           />
           <Drawer
             open={left}

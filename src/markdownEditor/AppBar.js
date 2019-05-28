@@ -9,6 +9,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import Button from "@material-ui/core/Button";
+import AlertDialog from "./Dialog";
+import Settings from "./Settings";
 
 const styles = {
   root: {
@@ -33,7 +35,8 @@ class MenuAppBar extends React.Component {
     auth: true,
     anchorEl: null,
     previewAnchorEl: null,
-    importAnchorEl: null
+    importAnchorEl: null,
+    showSettings: false
   };
 
   handleImportClose = (type, e) => {
@@ -88,9 +91,27 @@ class MenuAppBar extends React.Component {
     window.location = "https://github.com/renhongl/markdown-editor";
   };
 
+  toggleSetting = () => {
+    this.setState({
+      showSettings: !this.state.showSettings
+    });
+  };
+
   render() {
-    const { classes, toggleDrawer } = this.props;
-    const { auth, anchorEl, previewAnchorEl, importAnchorEl } = this.state;
+    const {
+      classes,
+      toggleDrawer,
+      handleSettingChange,
+      primaryColor,
+      autoSave
+    } = this.props;
+    const {
+      auth,
+      anchorEl,
+      previewAnchorEl,
+      importAnchorEl,
+      showSettings
+    } = this.state;
     const open = Boolean(anchorEl);
     const preivewOpen = Boolean(previewAnchorEl);
     const importOpen = Boolean(importAnchorEl);
@@ -98,6 +119,19 @@ class MenuAppBar extends React.Component {
     return (
       <div className={classes.root}>
         <AppBar position="static">
+          <AlertDialog
+            title="Settings"
+            content={
+              <Settings
+                handleSettingChange={handleSettingChange}
+                primaryColor={primaryColor}
+                autoSave={autoSave}
+              />
+            }
+            toggleDialog={this.toggleSetting}
+            type="help"
+            open={showSettings}
+          />
           <Toolbar>
             <IconButton
               className={classes.menuButton}
@@ -108,7 +142,7 @@ class MenuAppBar extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" className={classes.grow}>
-              Pomelo Markdown Editor
+              Markdown Editor
             </Typography>
             {auth && (
               <div>
@@ -223,6 +257,14 @@ class MenuAppBar extends React.Component {
                     open_in_new
                   </i>
                 </Button>
+                <IconButton
+                  className="setting-icon"
+                  color="inherit"
+                  aria-label="Menu"
+                  onClick={this.toggleSetting}
+                >
+                  <i className="material-icons">settings</i>
+                </IconButton>
               </div>
             )}
           </Toolbar>
