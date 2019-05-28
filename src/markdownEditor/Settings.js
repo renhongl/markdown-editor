@@ -1,8 +1,8 @@
 import React from "react";
 import CusColorPicker from "./ColorPicker";
 import Switch from "@material-ui/core/Switch";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
+// import Select from "@material-ui/core/Select";
+// import MenuItem from "@material-ui/core/MenuItem";
 
 export default props => (
   <div style={{ width: "550px", height: "500px" }}>
