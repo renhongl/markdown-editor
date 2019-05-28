@@ -11,6 +11,9 @@ import Menu from "@material-ui/core/Menu";
 import Button from "@material-ui/core/Button";
 import AlertDialog from "./Dialog";
 import Settings from "./Settings";
+// import { useTranslation } from "react-i18next";
+
+// const { t } = useTranslation();
 
 const styles = {
   root: {
