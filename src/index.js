@@ -2,8 +2,8 @@ import React from "react";
 import { render } from "react-dom";
 import { view as MarkdownEditor } from "./markdownEditor";
 import { I18n } from "react-i18nify";
-import en from "../public/lang/en.json";
-import zh from "../public/lang/zh.json";
+import en from "./lang/en.json";
+import zh from "./lang/zh.json";
 
 import "./styles.css";
 
