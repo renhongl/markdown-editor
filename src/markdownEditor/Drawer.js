@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import ExtendPanel from "./ExtendPanel";
 import Button from "@material-ui/core/Button";
+import { I18n } from "react-i18nify";
 
 const styles = {
   list: {
@@ -41,7 +42,7 @@ class TemporaryDrawer extends React.Component {
             className={classes.list}
             onKeyDown={toggleDrawer}
           >
-            <h4 className={classes.title}>Pomelo Markdown Editor</h4>
+            <h4 className={classes.title}>{I18n.t("title")}</h4>
             <ExtendPanel
               fileList={fileList}
               switchCurrent={switchCurrent}
@@ -57,7 +58,7 @@ class TemporaryDrawer extends React.Component {
               className={classes.button}
               onClick={addDocment}
             >
-              New Document
+              {I18n.t("new document")}
             </Button>
             <Button
               variant="outlined"
@@ -65,7 +66,7 @@ class TemporaryDrawer extends React.Component {
               className={classes.button}
               onClick={saveDoc}
             >
-              Save Session
+              {I18n.t("save session")}
             </Button>
           </div>
         </Drawer>

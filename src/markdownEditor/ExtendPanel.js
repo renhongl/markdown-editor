@@ -7,6 +7,7 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { I18n } from "react-i18nify";
 
 const styles = theme => ({
   root: {
@@ -37,7 +38,9 @@ function SimpleExpansionPanel(props) {
     <div className={classes.root}>
       <ExpansionPanel defaultExpanded={true} className="document-list">
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography className={classes.heading}>DOCUMENTS</Typography>
+          <Typography className={classes.heading}>
+            {I18n.t("documents")}
+          </Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.panelDetails}>
           <DocumentList

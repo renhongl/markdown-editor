@@ -1,22 +1,29 @@
 import React from "react";
 import CusColorPicker from "./ColorPicker";
 import Switch from "@material-ui/core/Switch";
-// import Select from "@material-ui/core/Select";
-// import MenuItem from "@material-ui/core/MenuItem";
+import { I18n } from "react-i18nify";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 
 export default props => (
-  <div style={{ width: "550px", height: "500px" }}>
-    {/* <div className="setting-row">
-      <span className="setting-key">Language:</span>
-      <span className="setting-value" style={{ marginTop: "7px" }}>
-        <Select value="en">
+  <div style={{ width: "550px", height: "380px" }}>
+    <div className="setting-row">
+      <span className="setting-key">{I18n.t("language")}:</span>
+      <span className="setting-value">
+        <Select
+          value={props.lang}
+          onChange={e => {
+            I18n.setLocale(e.target.value);
+            props.handleSettingChange("lang", e.target.value, "settings");
+          }}
+        >
           <MenuItem value="en">English</MenuItem>
           <MenuItem value="zh">简体中文</MenuItem>
         </Select>
       </span>
-    </div> */}
+    </div>
     <div className="setting-row">
-      <span className="setting-key">Theme:</span>
+      <span className="setting-key">{I18n.t("theme")}:</span>
       <span className="setting-value" style={{ marginTop: "7px" }}>
         <CusColorPicker
           onChange={props.handleSettingChange}
@@ -25,8 +32,8 @@ export default props => (
       </span>
     </div>
     <div className="setting-row">
-      <span className="setting-key">Auto Save:</span>
-      <span className="setting-value" style={{ marginRight: "-56px" }}>
+      <span className="setting-key">{I18n.t("auto save")}:</span>
+      <span className="setting-value">
         <Switch
           checked={props.autoSave}
           onChange={(e, value) =>

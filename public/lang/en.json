@@ -1,0 +1,19 @@
+{
+  "title": "Pomelo Markdown Editor",
+  "import from": "import from",
+  "preview as": "preview as",
+  "export as": "export as",
+  "settings": "Settings",
+  "language": "Language",
+  "theme": "Theme",
+  "auto save": "Auto Save",
+  "cancel": "cancel",
+  "documents": "documents",
+  "untitled document": "Untitled Dcoument",
+  "new document": "New Dcoument",
+  "save session": "Save Session",
+  "preview": "PREVIEW",
+  "full screen": "Full Screen",
+  "markdown syntax": "Markdown Syntax",
+  "mardkown syntax help": "Markdown Syntax Help"
+}

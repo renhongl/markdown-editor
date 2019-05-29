@@ -239,11 +239,17 @@ span.help-key {
 .setting-value {
   display: inline-block;
   float: right;
-  margin-right: 50px;
-  position: relative;
+  position: absolute;
+  right: 45px;
 }
 
 .setting-row {
   height: 60px;
   line-height: 60px;
+  width: 100%;
+  position: relative;
+}
+
+span.setting-key {
+  color: #505050;
 }

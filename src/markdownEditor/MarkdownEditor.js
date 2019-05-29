@@ -13,6 +13,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import AlertDialog from "./Dialog";
 import { defaultText } from "./config";
+import { I18n } from "react-i18nify";
 import "./theme.css";
 
 const styles = {
@@ -39,6 +40,7 @@ let settingObj = settingStr ? JSON.parse(settingStr) : {};
 let defaultPrimary = settingObj.primary || "#555555";
 let defaultSecondary = settingObj.secondary || "#d32f2f";
 let defaultAutoSave = settingObj.autoSave || false;
+let defaultLang = settingObj.defaultLang || "zh";
 
 const th = createMuiTheme({
   palette: {
@@ -53,7 +55,8 @@ export default class MarkdownEditor extends React.Component {
     theme: null,
     primary: defaultPrimary,
     secondary: defaultSecondary,
-    autoSave: defaultAutoSave
+    autoSave: defaultAutoSave,
+    lang: defaultLang
   };
 
   constructor(props) {
@@ -70,7 +73,7 @@ export default class MarkdownEditor extends React.Component {
       fileList: historyList || [
         {
           id: Math.random(),
-          title: "Utitled Document.md",
+          title: I18n.t("untitled document") + ".md",
           text: defaultText
         }
       ],
@@ -327,7 +330,11 @@ export default class MarkdownEditor extends React.Component {
     });
   };
 
-  addDocment = (e, name = "Utitled Document.md", text = defaultText) => {
+  addDocment = (
+    e,
+    name = I18n.t("untitled document") + ".md",
+    text = defaultText
+  ) => {
     this.setState({
       fileList: [
         ...this.state.fileList,
@@ -379,7 +386,7 @@ export default class MarkdownEditor extends React.Component {
         newList = [
           {
             id: Math.random(),
-            title: "Utitled Document.md",
+            title: I18n.t("untitled document") + ".md",
             text: defaultText
           }
         ];
@@ -447,7 +454,8 @@ export default class MarkdownEditor extends React.Component {
       openId,
       theme,
       primary,
-      autoSave
+      autoSave,
+      lang
     } = this.state;
     let deleteId = 0;
     fileList.forEach((item, index) => {
@@ -485,6 +493,7 @@ export default class MarkdownEditor extends React.Component {
             handleSettingChange={this.handleSettingChange}
             primaryColor={primary || defaultPrimary}
             autoSave={autoSave === undefined ? defaultAutoSave : autoSave}
+            lang={lang || defaultLang}
           />
           <Drawer
             open={left}

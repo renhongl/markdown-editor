@@ -36,6 +36,8 @@ Pomelo Markdown Editor requires [Node.js]() v8+ to run.
 # Todos
 * Color customise for content
 * Multiple language support
+* Ctrl-S to quick save
+* Show "*" after title 
 * Explore save to third party service
 # License
 MIT

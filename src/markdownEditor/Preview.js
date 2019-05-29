@@ -2,6 +2,7 @@ import React from "react";
 import hljs from "highlight.js";
 import MarkdownIt from "markdown-it";
 import "highlight.js/styles/atom-one-light.css";
+import { I18n } from "react-i18nify";
 
 const md = new MarkdownIt({
   html: true,
@@ -137,7 +138,7 @@ export default class Preview extends React.Component {
     return (
       <div className="preview-container">
         <div className="preview-title">
-          <div className="preview-title-left">PREVIEW</div>
+          <div className="preview-title-left">{I18n.t("preview")}</div>
         </div>
         <div className="preview">
           <div id="content" dangerouslySetInnerHTML={{ __html: result }} />

@@ -1,0 +1,19 @@
+{
+  "title": "柚子 Markdown 编辑器",
+  "import from": "导入",
+  "preview as": "预览",
+  "export as": "导出",
+  "settings": "设置",
+  "language": "语言",
+  "theme": "主题",
+  "auto save": "自动保存",
+  "cancel": "返回",
+  "documents": "文档",
+  "untitled document": "未命名文档",
+  "new document": "新建文档",
+  "save session": "保存会话",
+  "preview": "预览",
+  "full screen": "全屏",
+  "markdown syntax": "Markdown 句法",
+  "mardkown syntax help": "Markdown 句法帮助"
+}

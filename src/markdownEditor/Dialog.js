@@ -4,19 +4,20 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { I18n } from "react-i18nify";
 
 const getActionBtn = (type, toggleDialog) => {
   if (type === "help") {
     return (
       <Button onClick={() => toggleDialog(false)} color="primary">
-        Cancel
+        {I18n.t("cancel")}
       </Button>
     );
   }
   return (
     <React.Fragment>
       <Button onClick={() => toggleDialog(false)} color="primary">
-        Cancel
+        {I18n.t("cancel")}
       </Button>
       <Button
         variant="contained"

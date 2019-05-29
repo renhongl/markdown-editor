@@ -11,9 +11,8 @@ import Menu from "@material-ui/core/Menu";
 import Button from "@material-ui/core/Button";
 import AlertDialog from "./Dialog";
 import Settings from "./Settings";
-// import { useTranslation } from "react-i18next";
 
-// const { t } = useTranslation();
+import { I18n } from "react-i18nify";
 
 const styles = {
   root: {
@@ -106,7 +105,8 @@ class MenuAppBar extends React.Component {
       toggleDrawer,
       handleSettingChange,
       primaryColor,
-      autoSave
+      autoSave,
+      lang
     } = this.props;
     const {
       auth,
@@ -123,12 +123,13 @@ class MenuAppBar extends React.Component {
       <div className={classes.root}>
         <AppBar position="static">
           <AlertDialog
-            title="Settings"
+            title={I18n.t("settings")}
             content={
               <Settings
                 handleSettingChange={handleSettingChange}
                 primaryColor={primaryColor}
                 autoSave={autoSave}
+                lang={lang}
               />
             }
             toggleDialog={this.toggleSetting}
@@ -145,7 +146,7 @@ class MenuAppBar extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" className={classes.grow}>
-              Markdown Editor
+              {I18n.t("title")}
             </Typography>
             {auth && (
               <div>
@@ -155,7 +156,8 @@ class MenuAppBar extends React.Component {
                   onClick={this.handleImport}
                   color="inherit"
                 >
-                  Import from <i className="material-icons">arrow_drop_down</i>
+                  {I18n.t("import from")}{" "}
+                  <i className="material-icons">arrow_drop_down</i>
                 </Button>
                 <Menu
                   id="import-menu"
@@ -191,7 +193,8 @@ class MenuAppBar extends React.Component {
                   onClick={this.handlePreivew}
                   color="inherit"
                 >
-                  Preivew as <i className="material-icons">arrow_drop_down</i>
+                  {I18n.t("preview as")}{" "}
+                  <i className="material-icons">arrow_drop_down</i>
                 </Button>
                 <Menu
                   id="preview-menu"
@@ -224,7 +227,8 @@ class MenuAppBar extends React.Component {
                   onClick={this.handleMenu}
                   color="inherit"
                 >
-                  export as <i className="material-icons">arrow_drop_down</i>
+                  {I18n.t("export as")}{" "}
+                  <i className="material-icons">arrow_drop_down</i>
                 </Button>
                 <Menu
                   id="menu-appbar"
