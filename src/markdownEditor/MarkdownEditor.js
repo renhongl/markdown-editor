@@ -71,7 +71,7 @@ export default class MarkdownEditor extends React.Component {
   constructor(props) {
     super(props);
     let historyList = window.localStorage.getItem("pomeloMd");
-    if (historyList) {
+    if (historyList && JSON.parse(historyList).length !== 0) {
       historyList = JSON.parse(historyList);
     } else {
       historyList = [
@@ -79,7 +79,8 @@ export default class MarkdownEditor extends React.Component {
           id: Math.random(),
           title: `${I18n.t("untitled document")}-1.md`,
           text: defaultText,
-          save: false
+          save: true,
+          open: true
         }
       ];
     }
@@ -96,6 +97,7 @@ export default class MarkdownEditor extends React.Component {
       tables: true,
       simplifiedAutoLink: true
     });
+    this.saveCurrentDoc();
   }
 
   getIndex(list) {
@@ -135,13 +137,17 @@ export default class MarkdownEditor extends React.Component {
     if (this.state.autoSave) {
       this.autoSaveDoc();
     }
-    document.addEventListener("keydown", e => {
+    this.addKeDownEvent();
+  }
+
+  addKeDownEvent = () => {
+    document.querySelector(".markdown").addEventListener("keydown", e => {
       if (e.ctrlKey && e.which === 83) {
         this.saveCurrentDoc();
         e.preventDefault();
       }
     });
-  }
+  };
 
   saveCurrentDoc() {
     let saved = false;
@@ -151,17 +157,14 @@ export default class MarkdownEditor extends React.Component {
     );
     let currentSaveStr = window.localStorage.getItem("pomeloMd");
     let currentSaveArr = currentSaveStr ? JSON.parse(currentSaveStr) : [];
-    if (currentSaveArr.length === 0) {
-      currentSaveArr.push(currentDoc[0]);
-    } else {
-      currentSaveArr.forEach(item => {
-        if (item.id === currentDoc[0].id) {
-          item.text = currentDoc[0].text;
-          item.save = true;
-          saved = true;
-        }
-      });
-    }
+
+    currentSaveArr.forEach(item => {
+      if (item.id === currentDoc[0].id) {
+        item.text = currentDoc[0].text;
+        item.save = true;
+        saved = true;
+      }
+    });
     if (!saved) {
       currentDoc[0].save = true;
       currentSaveArr.push(currentDoc[0]);
@@ -339,23 +342,80 @@ export default class MarkdownEditor extends React.Component {
     return this.state.fileList.filter(item => item.id === id)[0];
   }
 
-  switchCurrent = id => {
-    this.setState({
-      current: -1
+  switchFileById = id => {
+    let indexForId = 0;
+    this.state.fileList.forEach((item, index) => {
+      if (item.id === id) {
+        indexForId = index;
+      }
     });
-    setTimeout(() => {
-      this.setState({
-        current: id
-      });
-    }, 500);
-    setTimeout(() => {
-      this.handleEvents();
-    }, 700);
+    this.switchCurrent(indexForId);
+  };
+
+  closeFile = id => {
+    let newFileList = JSON.parse(JSON.stringify(this.state.fileList));
+    newFileList.forEach((item, i) => {
+      if (item.id === id) {
+        item.open = false;
+      }
+    });
+    window.localStorage.setItem("pomeloMd", JSON.stringify(newFileList));
+    this.setState(
+      {
+        fileList: newFileList
+      },
+      () => {
+        this.switchCurrent(-1);
+        let switched = false;
+        newFileList.forEach((item, index) => {
+          if (item.open && !switched) {
+            this.switchCurrent(index);
+            switched = true;
+          }
+        });
+      }
+    );
+  };
+
+  openFile = index => {
+    let openId = 0;
+    let newFileList = JSON.parse(JSON.stringify(this.state.fileList));
+    newFileList.forEach((item, i) => {
+      if (i === index) {
+        item.open = true;
+        openId = item.id;
+      }
+    });
+    this.setState({
+      fileList: newFileList
+    });
+    let currentSaveStr = window.localStorage.getItem("pomeloMd");
+    let currentSaveArr = currentSaveStr ? JSON.parse(currentSaveStr) : [];
+    currentSaveArr.forEach(item => {
+      if (item.id === openId) {
+        item.open = true;
+      }
+    });
+    window.localStorage.setItem("pomeloMd", JSON.stringify(currentSaveArr));
+  };
+
+  switchCurrent = index => {
+    this.setState(
+      {
+        current: index
+      },
+      () => {
+        this.handleEvents();
+      }
+    );
   };
 
   handleEvents() {
     let preview = document.querySelector(".preview");
     let md = document.querySelector(".CodeMirror-scroll");
+    if (!md) {
+      return;
+    }
     let scroolDom = -1;
     let timer = null;
     const reset = () => {
@@ -407,7 +467,9 @@ export default class MarkdownEditor extends React.Component {
           {
             id: Math.random(),
             title: name,
-            text: text
+            text: text,
+            save: true,
+            open: true
           }
         ]
       },
@@ -419,6 +481,7 @@ export default class MarkdownEditor extends React.Component {
           },
           () => {
             this.switchCurrent(curr);
+            this.saveCurrentDoc();
           }
         );
       }
@@ -461,32 +524,66 @@ export default class MarkdownEditor extends React.Component {
   };
 
   toggleDialog = confirmed => {
-    this.setState({
-      openDialog: !this.state.openDialog
-    });
-    if (confirmed) {
-      let newList = [...this.state.fileList];
-      newList = newList.filter(item => item.id !== this.state.openId);
-      if (newList.length === 0) {
-        newList = [
-          {
-            id: Math.random(),
-            title: `${I18n.t("untitled document")}-${this.getIndex([])}.md`,
-            text: defaultText
+    this.setState(
+      {
+        openDialog: !this.state.openDialog,
+        current: -1
+      },
+      () => {
+        if (confirmed) {
+          let newList = [...this.state.fileList];
+          let temp = newList.filter(item => item.id === this.state.openId)[0];
+          newList = newList.filter(item => item.id !== this.state.openId);
+          if (newList.length === 0) {
+            newList[0] = temp;
+            newList[0].title = `${I18n.t("untitled document")}-${this.getIndex(
+              []
+            )}.md`;
+            newList[0].text = defaultText;
+            newList[0].save = true;
+            newList[0].open = true;
+            // newList = [
+            //   {
+            //     id: Math.random(),
+            //     title: `${I18n.t("untitled document")}-${this.getIndex([])}.md`,
+            //     text: defaultText,
+            //     save: true,
+            //     open: true
+            //   }
+            // ];
           }
-        ];
-      }
-      this.setState(
-        {
-          fileList: newList,
-          current: 0
-        },
-        () => {
-          this.switchCurrent(0);
+          let openIndex = 0;
+          let gotIndex = false;
+          this.state.fileList.forEach((item, index) => {
+            if (item.open && !gotIndex) {
+              openIndex = index;
+              gotIndex = true;
+            }
+          });
+          if (!gotIndex) {
+            this.openFile(openIndex);
+          }
+          this.setState(
+            {
+              fileList: newList,
+              current: openIndex
+            },
+            () => {
+              this.switchCurrent(openIndex);
+              this.deleteById(this.state.openId);
+            }
+          );
         }
-      );
-    }
+      }
+    );
   };
+
+  deleteById(id) {
+    let currentSaveStr = window.localStorage.getItem("pomeloMd");
+    let currentSaveArr = currentSaveStr ? JSON.parse(currentSaveStr) : [];
+    let newFiles = currentSaveArr.filter(item => item.id !== id);
+    window.localStorage.setItem("pomeloMd", JSON.stringify(newFiles));
+  }
 
   showMessage = msg => {
     this.setState(
@@ -562,6 +659,7 @@ export default class MarkdownEditor extends React.Component {
         </div>
       );
     };
+    console.log(fileList[current] && fileList[current].text);
     return (
       <MuiThemeProvider theme={theme || th}>
         <div style={styles.container}>
@@ -594,17 +692,23 @@ export default class MarkdownEditor extends React.Component {
             deleteAction={this.deleteAction}
             saveDoc={this.saveDoc}
             current={current}
+            openFile={this.openFile}
           />
           <div style={styles.left}>
             {current !== -1 ? (
               <Markdown
                 title={fileList[current].title}
                 save={fileList[current].save}
+                fileList={fileList}
                 handleValueChange={this.handleValueChange}
                 value={fileList[current].text}
                 current={current}
                 updateTitle={this.updateTitle}
                 openFullScreen={this.openFullScreen}
+                switchFileById={this.switchFileById}
+                closeFile={this.closeFile}
+                currentId={fileList[current].id}
+                addKeDownEvent={this.addKeDownEvent}
               />
             ) : null}
           </div>

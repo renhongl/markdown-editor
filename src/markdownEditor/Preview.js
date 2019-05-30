@@ -3,7 +3,6 @@ import hljs from "highlight.js";
 import MarkdownIt from "markdown-it";
 import "highlight.js/styles/atom-one-light.css";
 import { I18n } from "react-i18nify";
-import IconButton from "@material-ui/core/IconButton";
 
 const md = new MarkdownIt({
   html: true,

@@ -50,9 +50,22 @@
   height: 44px;
   background: #f9f9f9;
   line-height: 44px;
-  padding-left: 10px;
   border-right: 1px solid #d6d6d6;
   position: relative;
+  width: 100%;
+}
+
+.title-file-list {
+  width: calc(100% - 100px);
+  overflow-x: auto;
+  display: inline-block;
+  height: 100%;
+  display: -webkit-box;
+  overflow-y: hidden;
+}
+
+.title-file-list::-webkit-scrollbar {
+  background-color: transparent;
 }
 
 .CodeMirror-cursor {
@@ -268,4 +281,57 @@ span.setting-key {
   background: none;
   outline: none;
   font-size: 0.8rem;
+}
+
+.title-item-wrap.selected {
+  background: #d4d4d4;
+}
+
+.title-item-wrap {
+  width: 130px;
+  padding: 0 5px 0 5px;
+  height: 40px;
+  margin: 0;
+  border-right: 1px solid #d4d4d4;
+  cursor: pointer;
+  margin-top: 2px;
+}
+
+.title-item {
+  width: 90%;
+  float: left;
+  height: 100%;
+  font-size: 0.8rem;
+}
+
+.title-item-status {
+  width: 10%;
+  float: left;
+  height: 100%;
+  text-align: center;
+  display: none;
+}
+
+.title-item-wrap.selected .title-item-status {
+  display: inline-block;
+}
+
+.title-item-wrap:hover .title-item-wrap .title-item-status {
+  display: inline-block;
+}
+
+.unsave-icon {
+  background: #8c8888;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+}
+
+.title-item-wrap:hover > .title-item-status {
+  display: inline-block;
+}
+
+.title-item-status.unsave {
+  display: inline-block !important;
 }

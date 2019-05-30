@@ -32,7 +32,8 @@ function SimpleExpansionPanel(props) {
     addDocment,
     deleteAction,
     saveDoc,
-    current
+    current,
+    openFile
   } = props;
   return (
     <div className={classes.root}>
@@ -51,6 +52,7 @@ function SimpleExpansionPanel(props) {
             deleteAction={deleteAction}
             saveDoc={saveDoc}
             current={current}
+            openFile={openFile}
           />
         </ExpansionPanelDetails>
       </ExpansionPanel>

@@ -31,7 +31,8 @@ class TemporaryDrawer extends React.Component {
       addDocment,
       deleteAction,
       saveDoc,
-      current
+      current,
+      openFile
     } = this.props;
     return (
       <div>
@@ -51,6 +52,7 @@ class TemporaryDrawer extends React.Component {
               deleteAction={deleteAction}
               saveDoc={saveDoc}
               current={current}
+              openFile={openFile}
             />
             <Button
               variant="contained"

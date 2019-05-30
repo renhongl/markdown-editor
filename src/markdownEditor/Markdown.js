@@ -1,6 +1,5 @@
 import * as React from "react";
 import CodeMirror from "codemirror";
-import Input from "@material-ui/core/Input";
 import IconButton from "@material-ui/core/IconButton";
 import activine from "codemirror-activine";
 import Tooltip from "@material-ui/core/Tooltip";
@@ -20,7 +19,17 @@ export default class Markdown extends React.Component {
     });
   };
 
-  componentDidMount() {
+  componentDidUpdate(preProps) {
+    if (preProps.current !== this.props.current) {
+      this.renderMarkdown();
+    }
+  }
+
+  renderMarkdown() {
+    let codeDom = document.querySelector(".CodeMirror");
+    if (codeDom) {
+      codeDom.parentNode.removeChild(codeDom);
+    }
     const { value, handleValueChange } = this.props;
     this.myCodeMirror = CodeMirror(document.querySelector(".markdown"), {
       value: value,
@@ -40,10 +49,21 @@ export default class Markdown extends React.Component {
     this.myCodeMirror.on("change", (a, b) => {
       handleValueChange(this.myCodeMirror.getValue());
     });
+    this.props.addKeDownEvent();
+  }
+
+  componentDidMount() {
+    this.renderMarkdown();
   }
 
   render() {
-    const { title, updateTitle, openFullScreen, save } = this.props;
+    const {
+      openFullScreen,
+      fileList,
+      current,
+      switchFileById,
+      closeFile
+    } = this.props;
     const { showHelp } = this.state;
     return (
       <div className="markdown-container">
@@ -55,8 +75,33 @@ export default class Markdown extends React.Component {
           type="help"
         />
         <div className="markdown-title">
-          <input value={title} onChange={updateTitle} className="mark-title" />
-          {save ? "" : " *"}
+          <div className="title-file-list">
+            {fileList
+              .filter(item => item.open)
+              .map((file, index) => (
+                <div
+                  onClick={() => switchFileById(file.id)}
+                  className={
+                    file.id === fileList[current].id
+                      ? "title-item-wrap selected"
+                      : "title-item-wrap"
+                  }
+                  key={file.id}
+                >
+                  <div className="title-item">{file.title}</div>
+                  <div
+                    className={
+                      file.save
+                        ? "title-item-status"
+                        : "title-item-status unsave"
+                    }
+                    onClick={() => closeFile(file.id)}
+                  >
+                    {file.save ? "×" : <span className="unsave-icon" />}
+                  </div>
+                </div>
+              ))}
+          </div>
           <Tooltip title="Markdown Syntax" placement="bottom">
             <IconButton
               aria-label="help"

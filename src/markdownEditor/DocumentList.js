@@ -52,7 +52,7 @@ class CheckboxList extends React.Component {
   };
 
   render() {
-    const { classes, fileList, deleteAction, current } = this.props;
+    const { classes, fileList, deleteAction, current, openFile } = this.props;
     return (
       <List className={classes.root}>
         {fileList.map((item, index) => (
@@ -62,7 +62,10 @@ class CheckboxList extends React.Component {
             className={classes.listItem}
             dense
             button
-            onClick={this.handleToggle()}
+            onClick={() => {
+              openFile(index);
+              this.handleToggle();
+            }}
           >
             <ListItemText
               primary={item.title}
