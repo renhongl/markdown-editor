@@ -29,6 +29,7 @@
 .preview {
   overflow: auto;
   width: 100%;
+  background: white;
 }
 
 .markdown-container {
@@ -84,6 +85,7 @@ p {
   border-left: 0px;
   line-height: 44px;
   padding-left: 10px;
+  position: relative;
 }
 
 .preview thead {
@@ -131,9 +133,17 @@ p {
 }
 
 .preview-title-right {
-  width: 50%;
+  width: 48%;
   float: left;
   display: flex;
+  justify-content: flex-end;
+  margin-right: 2%;
+  font-size: 0.7rem;
+}
+
+.preview-title-right .key {
+  font-size: 0.6rem;
+  color: #949494;
 }
 
 .preview-container {
@@ -251,4 +261,11 @@ span.help-key {
 
 span.setting-key {
   color: #505050;
+}
+
+.mark-title {
+  border: none;
+  background: none;
+  outline: none;
+  font-size: 0.8rem;
 }

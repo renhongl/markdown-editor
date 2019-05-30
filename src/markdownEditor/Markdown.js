@@ -43,7 +43,7 @@ export default class Markdown extends React.Component {
   }
 
   render() {
-    const { title, updateTitle, openFullScreen } = this.props;
+    const { title, updateTitle, openFullScreen, save } = this.props;
     const { showHelp } = this.state;
     return (
       <div className="markdown-container">
@@ -55,7 +55,8 @@ export default class Markdown extends React.Component {
           type="help"
         />
         <div className="markdown-title">
-          <Input value={title} onChange={updateTitle} />
+          <input value={title} onChange={updateTitle} className="mark-title" />
+          {save ? "" : " *"}
           <Tooltip title="Markdown Syntax" placement="bottom">
             <IconButton
               aria-label="help"

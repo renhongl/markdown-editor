@@ -3,6 +3,7 @@ import hljs from "highlight.js";
 import MarkdownIt from "markdown-it";
 import "highlight.js/styles/atom-one-light.css";
 import { I18n } from "react-i18nify";
+import IconButton from "@material-ui/core/IconButton";
 
 const md = new MarkdownIt({
   html: true,
@@ -139,6 +140,13 @@ export default class Preview extends React.Component {
       <div className="preview-container">
         <div className="preview-title">
           <div className="preview-title-left">{I18n.t("preview")}</div>
+          <div className="preview-title-right">
+            <span className="key">WORDS:</span>&nbsp;
+            {
+              input.split(/\s|\t|\n/gi).filter(item => item.trim() !== "")
+                .length
+            }
+          </div>
         </div>
         <div className="preview">
           <div id="content" dangerouslySetInnerHTML={{ __html: result }} />

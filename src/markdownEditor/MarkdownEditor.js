@@ -14,6 +14,8 @@ import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import AlertDialog from "./Dialog";
 import { defaultText } from "./config";
 import { I18n } from "react-i18nify";
+import en from "../lang/en.json";
+import zh from "../lang/zh.json";
 import "./theme.css";
 
 const styles = {
@@ -40,7 +42,14 @@ let settingObj = settingStr ? JSON.parse(settingStr) : {};
 let defaultPrimary = settingObj.primary || "#555555";
 let defaultSecondary = settingObj.secondary || "#d32f2f";
 let defaultAutoSave = settingObj.autoSave || false;
-let defaultLang = settingObj.defaultLang || "zh";
+let defaultLang = settingObj.lang || "en";
+
+I18n.setTranslations({
+  en,
+  zh
+});
+
+I18n.setLocale(defaultLang);
 
 const th = createMuiTheme({
   palette: {
@@ -65,18 +74,19 @@ export default class MarkdownEditor extends React.Component {
     if (historyList) {
       historyList = JSON.parse(historyList);
     } else {
-      historyList = null;
+      historyList = [
+        {
+          id: Math.random(),
+          title: `${I18n.t("untitled document")}-1.md`,
+          text: defaultText,
+          save: false
+        }
+      ];
     }
     this.state = {
       current: 0,
       left: false,
-      fileList: historyList || [
-        {
-          id: Math.random(),
-          title: I18n.t("untitled document") + ".md",
-          text: defaultText
-        }
-      ],
+      fileList: historyList,
       snackOpen: false,
       snackMsg: "",
       openDialog: false,
@@ -88,6 +98,19 @@ export default class MarkdownEditor extends React.Component {
     });
   }
 
+  getIndex(list) {
+    if (list instanceof Array && list.length === 0) {
+      return 1;
+    }
+    let currentIndex =
+      list ||
+      this.state.fileList.map(item => {
+        return item.title.split(/-|\./g)[1];
+      });
+    let max = Math.max.apply(null, currentIndex) || 0;
+    return max + 1;
+  }
+
   handleValueChange = value => {
     this.updateFileListText(value);
   };
@@ -97,6 +120,7 @@ export default class MarkdownEditor extends React.Component {
     newFileList.forEach((item, i) => {
       if (i === this.state.current) {
         item.text = value;
+        item.save = false;
       }
     });
     this.setState({
@@ -111,6 +135,47 @@ export default class MarkdownEditor extends React.Component {
     if (this.state.autoSave) {
       this.autoSaveDoc();
     }
+    document.addEventListener("keydown", e => {
+      if (e.ctrlKey && e.which === 83) {
+        this.saveCurrentDoc();
+        e.preventDefault();
+      }
+    });
+  }
+
+  saveCurrentDoc() {
+    let saved = false;
+    let currentIndex = this.state.current;
+    let currentDoc = this.state.fileList.filter(
+      (item, inde) => currentIndex === inde
+    );
+    let currentSaveStr = window.localStorage.getItem("pomeloMd");
+    let currentSaveArr = currentSaveStr ? JSON.parse(currentSaveStr) : [];
+    if (currentSaveArr.length === 0) {
+      currentSaveArr.push(currentDoc[0]);
+    } else {
+      currentSaveArr.forEach(item => {
+        if (item.id === currentDoc[0].id) {
+          item.text = currentDoc[0].text;
+          item.save = true;
+          saved = true;
+        }
+      });
+    }
+    if (!saved) {
+      currentDoc[0].save = true;
+      currentSaveArr.push(currentDoc[0]);
+    }
+    window.localStorage.setItem("pomeloMd", JSON.stringify(currentSaveArr));
+    let newFileList = JSON.parse(JSON.stringify(this.state.fileList));
+    newFileList.forEach((item, i) => {
+      if (i === currentIndex) {
+        item.save = true;
+      }
+    });
+    this.setState({
+      fileList: newFileList
+    });
   }
 
   autoSaveDoc() {
@@ -332,24 +397,44 @@ export default class MarkdownEditor extends React.Component {
 
   addDocment = (
     e,
-    name = I18n.t("untitled document") + ".md",
+    name = `${I18n.t("untitled document")}-${this.getIndex()}.md`,
     text = defaultText
   ) => {
-    this.setState({
-      fileList: [
-        ...this.state.fileList,
-        {
-          id: Math.random(),
-          title: name,
-          text: text
-        }
-      ]
-    });
+    this.setState(
+      {
+        fileList: [
+          ...this.state.fileList,
+          {
+            id: Math.random(),
+            title: name,
+            text: text
+          }
+        ]
+      },
+      () => {
+        let curr = this.state.fileList.length - 1;
+        this.setState(
+          {
+            current: curr
+          },
+          () => {
+            this.switchCurrent(curr);
+          }
+        );
+      }
+    );
   };
 
   saveDoc = () => {
-    let cache = JSON.stringify(this.state.fileList);
+    let newFileList = JSON.parse(JSON.stringify(this.state.fileList));
+    newFileList.forEach(item => {
+      item.save = true;
+    });
+    let cache = JSON.stringify(newFileList);
     window.localStorage.setItem("pomeloMd", cache);
+    this.setState({
+      fileList: newFileList
+    });
     this.showMessage("Save Documents Successfully.");
   };
 
@@ -386,7 +471,7 @@ export default class MarkdownEditor extends React.Component {
         newList = [
           {
             id: Math.random(),
-            title: I18n.t("untitled document") + ".md",
+            title: `${I18n.t("untitled document")}-${this.getIndex([])}.md`,
             text: defaultText
           }
         ];
@@ -468,7 +553,12 @@ export default class MarkdownEditor extends React.Component {
         <div>
           {fileList[deleteId].title}
           <br />
-          Words Count: {fileList[deleteId].text.split(" ").length}
+          Words Count:{" "}
+          {
+            fileList[deleteId].text
+              .split(/\s|\t|\n/gi)
+              .filter(item => item.trim() !== "").length
+          }
         </div>
       );
     };
@@ -509,6 +599,7 @@ export default class MarkdownEditor extends React.Component {
             {current !== -1 ? (
               <Markdown
                 title={fileList[current].title}
+                save={fileList[current].save}
                 handleValueChange={this.handleValueChange}
                 value={fileList[current].text}
                 current={current}
