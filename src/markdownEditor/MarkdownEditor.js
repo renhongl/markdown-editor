@@ -23,15 +23,21 @@ const styles = {
     width: "100%",
     height: "100%"
   },
+  fullContainer: {
+    width: "100%",
+    height: "calc(100% - 64px)",
+    overflow: "hidden"
+  },
   left: {
     width: "50%",
     float: "left",
-    height: "calc(100% - 66px)"
+    height: "100%",
+    overflow: "hidden"
   },
   right: {
     width: "50%",
     float: "left",
-    height: "calc(100% - 66px)",
+    height: "100%",
     overflow: "hidden"
   }
 };
@@ -73,6 +79,7 @@ export default class MarkdownEditor extends React.Component {
     let historyList = window.localStorage.getItem("pomeloMd");
     if (historyList && JSON.parse(historyList).length !== 0) {
       historyList = JSON.parse(historyList);
+      historyList[0].open = true;
     } else {
       historyList = [
         {
@@ -109,6 +116,10 @@ export default class MarkdownEditor extends React.Component {
       this.state.fileList.map(item => {
         return item.title.split(/-|\./g)[1];
       });
+    currentIndex = currentIndex.filter(item => !Number.isNaN(Number(item)));
+    if (currentIndex.length === 0) {
+      return 1;
+    }
     let max = Math.max.apply(null, currentIndex) || 0;
     return max + 1;
   }
@@ -501,21 +512,25 @@ export default class MarkdownEditor extends React.Component {
     this.showMessage("Save Documents Successfully.");
   };
 
-  updateTitle = e => {
-    this.updateFileListTitle(e.target.value);
-  };
-
-  updateFileListTitle(value) {
+  updateTitle = (id, value) => {
     let newFileList = JSON.parse(JSON.stringify(this.state.fileList));
     newFileList.forEach((item, i) => {
-      if (i === this.state.current) {
+      if (id === item.id) {
         item.title = value;
       }
     });
     this.setState({
       fileList: newFileList
     });
-  }
+    let currentSaveStr = window.localStorage.getItem("pomeloMd");
+    let currentSaveArr = currentSaveStr ? JSON.parse(currentSaveStr) : [];
+    currentSaveArr.forEach(item => {
+      if (item.id === id) {
+        item.title = value;
+      }
+    });
+    window.localStorage.setItem("pomeloMd", JSON.stringify(currentSaveArr));
+  };
 
   closeSnack = () => {
     this.setState({
@@ -542,15 +557,6 @@ export default class MarkdownEditor extends React.Component {
             newList[0].text = defaultText;
             newList[0].save = true;
             newList[0].open = true;
-            // newList = [
-            //   {
-            //     id: Math.random(),
-            //     title: `${I18n.t("untitled document")}-${this.getIndex([])}.md`,
-            //     text: defaultText,
-            //     save: true,
-            //     open: true
-            //   }
-            // ];
           }
           let openIndex = 0;
           let gotIndex = false;
@@ -659,7 +665,6 @@ export default class MarkdownEditor extends React.Component {
         </div>
       );
     };
-    console.log(fileList[current] && fileList[current].text);
     return (
       <MuiThemeProvider theme={theme || th}>
         <div style={styles.container}>
@@ -692,28 +697,32 @@ export default class MarkdownEditor extends React.Component {
             deleteAction={this.deleteAction}
             saveDoc={this.saveDoc}
             current={current}
+            updateTitle={this.updateTitle}
             openFile={this.openFile}
           />
-          <div style={styles.left}>
-            {current !== -1 ? (
-              <Markdown
-                title={fileList[current].title}
-                save={fileList[current].save}
-                fileList={fileList}
-                handleValueChange={this.handleValueChange}
-                value={fileList[current].text}
-                current={current}
-                updateTitle={this.updateTitle}
-                openFullScreen={this.openFullScreen}
-                switchFileById={this.switchFileById}
-                closeFile={this.closeFile}
-                currentId={fileList[current].id}
-                addKeDownEvent={this.addKeDownEvent}
-              />
-            ) : null}
-          </div>
-          <div style={styles.right}>
-            {current !== -1 ? <Preview input={fileList[current].text} /> : null}
+          <div style={styles.fullContainer}>
+            <div style={styles.left}>
+              {current !== -1 ? (
+                <Markdown
+                  title={fileList[current].title}
+                  save={fileList[current].save}
+                  fileList={fileList}
+                  handleValueChange={this.handleValueChange}
+                  value={fileList[current].text}
+                  current={current}
+                  openFullScreen={this.openFullScreen}
+                  switchFileById={this.switchFileById}
+                  closeFile={this.closeFile}
+                  currentId={fileList[current].id}
+                  addKeDownEvent={this.addKeDownEvent}
+                />
+              ) : null}
+            </div>
+            <div style={styles.right}>
+              {current !== -1 ? (
+                <Preview input={fileList[current].text} />
+              ) : null}
+            </div>
           </div>
           <Snackbar
             anchorOrigin={{

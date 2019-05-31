@@ -8,6 +8,8 @@
   "dependencies": {
     "@material-ui/core": "3.9.0",
     "@material-ui/icons": "3.0.2",
+    "@material-ui/styles": "4.0.1",
+    "clsx": "1.0.4",
     "codemirror": "5.42.2",
     "codemirror-activine": "0.0.1",
     "draft-js": "0.10.5",
