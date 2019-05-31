@@ -10,7 +10,8 @@ activine(CodeMirror);
 
 export default class Markdown extends React.Component {
   state = {
-    showHelp: false
+    showHelp: false,
+    preview: true
   };
 
   toggleHelp = () => {
@@ -56,13 +57,30 @@ export default class Markdown extends React.Component {
     this.renderMarkdown();
   }
 
+  openTogglePreview = () => {
+    if (this.state.preview) {
+      document.querySelector(".app-left").style.width = "100%";
+      document.querySelector(".app-right").style.width = "0%";
+      this.setState({
+        preview: false
+      });
+    } else {
+      document.querySelector(".app-left").style.width = "50%";
+      document.querySelector(".app-right").style.width = "50%";
+      this.setState({
+        preview: true
+      });
+    }
+  };
+
   render() {
     const {
       openFullScreen,
       fileList,
       current,
       switchFileById,
-      closeFile
+      closeFile,
+      fullScreen
     } = this.props;
     const { showHelp } = this.state;
     return (
@@ -86,6 +104,7 @@ export default class Markdown extends React.Component {
                       ? "title-item-wrap selected"
                       : "title-item-wrap"
                   }
+                  title={file.title}
                   key={file.id}
                 >
                   <div className="title-item">{file.title}</div>
@@ -121,8 +140,25 @@ export default class Markdown extends React.Component {
               aria-label="Delete"
               onClick={openFullScreen}
             >
+              {fullScreen ? (
+                <i className="material-icons" fontSize="small">
+                  fullscreen_exit
+                </i>
+              ) : (
+                <i className="material-icons" fontSize="small">
+                  fullscreen
+                </i>
+              )}
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Preview" placement="bottom">
+            <IconButton
+              size="small"
+              className="show-preview-btn"
+              onClick={this.openTogglePreview}
+            >
               <i className="material-icons" fontSize="small">
-                fullscreen
+                chrome_reader_mode
               </i>
             </IconButton>
           </Tooltip>

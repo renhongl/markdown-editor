@@ -62,7 +62,7 @@
   overflow-x: auto;
   display: inline-block;
   height: 100%;
-  display: -webkit-box;
+  display: flex;
   overflow-y: hidden;
 }
 
@@ -216,9 +216,18 @@ p {
   top: 3px;
 }
 
+.show-preview-btn {
+  position: absolute !important;
+  right: 66px;
+  width: 30px !important;
+  height: 30px !important;
+  padding: 0 !important;
+  top: 3px;
+}
+
 .help-btn {
   position: absolute !important;
-  right: 46px;
+  right: 36px;
   width: 30px !important;
   height: 30px !important;
   padding: 0 !important;
@@ -289,7 +298,7 @@ span.setting-key {
 }
 
 .title-item-wrap.selected {
-  background: #fff;
+  background: #f9f9f9;
 }
 
 .title-item-wrap {
@@ -308,6 +317,7 @@ span.setting-key {
   float: left;
   height: 100%;
   font-size: 0.8rem;
+  word-break: break-all;
 }
 
 .title-item-status {

@@ -71,7 +71,8 @@ export default class MarkdownEditor extends React.Component {
     primary: defaultPrimary,
     secondary: defaultSecondary,
     autoSave: defaultAutoSave,
-    lang: defaultLang
+    lang: defaultLang,
+    fullScreen: false
   };
 
   constructor(props) {
@@ -605,15 +606,38 @@ export default class MarkdownEditor extends React.Component {
   };
 
   openFullScreen = () => {
-    let elem = document.querySelector(".markdown");
-    if (elem.requestFullscreen) {
-      elem.requestFullscreen();
-    } else if (elem.mozRequestFullScreen) {
-      elem.mozRequestFullScreen();
-    } else if (elem.webkitRequestFullscreen) {
-      elem.webkitRequestFullscreen();
-    } else if (elem.msRequestFullscreen) {
-      elem.msRequestFullscreen();
+    let elem = document.querySelector(".full-container");
+    if (
+      this.state.fullScreen === undefined ||
+      this.state.fullScreen === false
+    ) {
+      console.log("full");
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem.mozRequestFullScreen) {
+        elem.mozRequestFullScreen();
+      } else if (elem.webkitRequestFullscreen) {
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) {
+        elem.msRequestFullscreen();
+      }
+      this.setState({
+        fullScreen: true
+      });
+    } else {
+      console.log("exit");
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      }
+      this.setState({
+        fullScreen: false
+      });
     }
   };
 
@@ -643,7 +667,8 @@ export default class MarkdownEditor extends React.Component {
       theme,
       primary,
       autoSave,
-      lang
+      lang,
+      fullScreen
     } = this.state;
     let deleteId = 0;
     fileList.forEach((item, index) => {
@@ -700,8 +725,8 @@ export default class MarkdownEditor extends React.Component {
             updateTitle={this.updateTitle}
             openFile={this.openFile}
           />
-          <div style={styles.fullContainer}>
-            <div style={styles.left}>
+          <div className="full-container" style={styles.fullContainer}>
+            <div className="app-left" style={styles.left}>
               {current !== -1 ? (
                 <Markdown
                   title={fileList[current].title}
@@ -715,10 +740,11 @@ export default class MarkdownEditor extends React.Component {
                   closeFile={this.closeFile}
                   currentId={fileList[current].id}
                   addKeDownEvent={this.addKeDownEvent}
+                  fullScreen={fullScreen}
                 />
               ) : null}
             </div>
-            <div style={styles.right}>
+            <div className="app-right" style={styles.right}>
               {current !== -1 ? (
                 <Preview input={fileList[current].text} />
               ) : null}
