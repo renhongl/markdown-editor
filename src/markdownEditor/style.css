@@ -367,3 +367,19 @@ span.setting-key {
 .file-action-icon:hover {
   display: inline-block;
 }
+
+.doc-action-btn {
+  padding: 3px !important;
+}
+
+.doc-title-input > span {
+  width: 145px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  outline: none;
+}
+
+.word-count {
+  margin-left: 10px;
+  text-align: center;
+}

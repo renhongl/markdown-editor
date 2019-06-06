@@ -12,7 +12,7 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import AlertDialog from "./Dialog";
-import { defaultText } from "./config";
+import { defaultText, defaultChineseText } from "./config";
 import { I18n } from "react-i18nify";
 import en from "../lang/en.json";
 import zh from "../lang/zh.json";
@@ -65,6 +65,15 @@ const th = createMuiTheme({
   typography: { useNextVariants: true }
 });
 
+const getDefaultText = () => {
+  let settingStr = window.localStorage.getItem("pomeloSettings");
+  let settingObj = settingStr ? JSON.parse(settingStr) : {};
+  if (settingObj.lang === "en") {
+    return defaultText;
+  }
+  return defaultChineseText;
+};
+
 export default class MarkdownEditor extends React.Component {
   state = {
     theme: null,
@@ -86,7 +95,7 @@ export default class MarkdownEditor extends React.Component {
         {
           id: Math.random(),
           title: `${I18n.t("untitled document")}-1.md`,
-          text: defaultText,
+          text: getDefaultText(),
           save: true,
           open: true
         }
@@ -470,7 +479,7 @@ export default class MarkdownEditor extends React.Component {
   addDocment = (
     e,
     name = `${I18n.t("untitled document")}-${this.getIndex()}.md`,
-    text = defaultText
+    text = getDefaultText()
   ) => {
     this.setState(
       {
@@ -555,7 +564,7 @@ export default class MarkdownEditor extends React.Component {
             newList[0].title = `${I18n.t("untitled document")}-${this.getIndex(
               []
             )}.md`;
-            newList[0].text = defaultText;
+            newList[0].text = getDefaultText();
             newList[0].save = true;
             newList[0].open = true;
           }

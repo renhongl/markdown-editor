@@ -140,11 +140,17 @@ export default class Preview extends React.Component {
         <div className="preview-title">
           <div className="preview-title-left">{I18n.t("preview")}</div>
           <div className="preview-title-right">
-            <span className="key">WORDS:</span>&nbsp;
-            {
-              input.split(/\s|\t|\n/gi).filter(item => item.trim() !== "")
-                .length
-            }
+            <div className="word-count">
+              <span className="key">{I18n.t("words")}:</span>&nbsp;
+              {
+                input.split(/\s|\t|\n/gi).filter(item => item.trim() !== "")
+                  .length
+              }
+            </div>
+            <div className="word-count">
+              <span className="key">{I18n.t("characters")}:</span>&nbsp;
+              {input.length}
+            </div>
           </div>
         </div>
         <div className="preview">

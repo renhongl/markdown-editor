@@ -7,6 +7,7 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
+import { I18n } from "react-i18nify";
 
 const styles = theme => ({
   root: {
@@ -57,8 +58,6 @@ class CheckboxList extends React.Component {
     let span = target.querySelector("div span");
     span.setAttribute("contentEditable", true);
     span.focus();
-    span.style.width = "100px";
-    span.style.outline = "none";
     span.style.border = "1px solid grey";
     span.addEventListener("click", e => {
       if (span.getAttribute("contentEditable") === "true") {
@@ -92,17 +91,25 @@ class CheckboxList extends React.Component {
             }}
           >
             <ListItemText
+              className="doc-title-input"
               primary={item.title}
+              title={item.title}
               onClick={this.handleAction(index)}
             />
             <ListItemSecondaryAction className="file-action-icon">
-              <Tooltip title="Rename" placement="top">
-                <IconButton onClick={() => this.editTitle(item.id)}>
+              <Tooltip title={I18n.t("rename")} placement="top">
+                <IconButton
+                  className="doc-action-btn"
+                  onClick={() => this.editTitle(item.id)}
+                >
                   <i className="material-icons">edit</i>
                 </IconButton>
               </Tooltip>
-              <Tooltip title="Delete" placement="top">
-                <IconButton onClick={() => deleteAction(item.id)}>
+              <Tooltip title={I18n.t("delete")} placement="top">
+                <IconButton
+                  className="doc-action-btn"
+                  onClick={() => deleteAction(item.id)}
+                >
                   <i className="material-icons">delete</i>
                 </IconButton>
               </Tooltip>

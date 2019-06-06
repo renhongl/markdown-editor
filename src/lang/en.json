@@ -15,5 +15,10 @@
   "preview": "PREVIEW",
   "full screen": "Full Screen",
   "markdown syntax": "Markdown Syntax",
-  "mardkown syntax help": "Markdown Syntax Help"
+  "mardkown syntax help": "Markdown Syntax Help",
+  "rename": "Rename",
+  "delete": "Delete",
+  "toggle view": "Toggle Preview",
+  "words": "WORDS",
+  "characters": "CHARACTERS"
 }

@@ -7,6 +7,11 @@ Pomelo Markdown Editor is a full front-end side, react powered html5 markdown ed
 - Type some markdown on the left
 - See preview on the right
 
+# Documentation
+
+- [简体中文](https://github.com/renhongl/markdown-editor/blob/master/doc-zh.md)
+- [英语](https://github.com/renhongl/markdown-editor/blob/master/README.md)
+
 # New Features
 
 - Open multiple file at the same time --- <span style="color: red">NEW</span>
@@ -41,7 +46,6 @@ Pomelo Markdown Editor requires [Node.js]() v8+ to run.
 
 # Todos
 
-- <input type="checkbox" disabled/>Color customise for content
 - <input type="checkbox" checked disabled/>Multiple language support
 - <input type="checkbox" checked disabled/>Ctrl-S to quick save
 - <input type="checkbox" checked disabled/>Show status for does not save file

@@ -15,5 +15,10 @@
   "preview": "预览",
   "full screen": "全屏",
   "markdown syntax": "Markdown 句法",
-  "mardkown syntax help": "Markdown 句法帮助"
+  "mardkown syntax help": "Markdown 句法帮助",
+  "rename": "重命名",
+  "delete": "删除",
+  "toggle view": "切换预览",
+  "words": "单词数",
+  "characters": "字数"
 }

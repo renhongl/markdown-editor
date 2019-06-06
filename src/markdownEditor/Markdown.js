@@ -5,6 +5,7 @@ import activine from "codemirror-activine";
 import Tooltip from "@material-ui/core/Tooltip";
 import AlertDialog from "./Dialog";
 import Help from "./Help";
+import { I18n } from "react-i18nify";
 
 activine(CodeMirror);
 
@@ -86,7 +87,7 @@ export default class Markdown extends React.Component {
     return (
       <div className="markdown-container">
         <AlertDialog
-          title="Markdown Syntax Help"
+          title={I18n.t("mardkown syntax help")}
           content={<Help />}
           open={showHelp}
           toggleDialog={this.toggleHelp}
@@ -121,7 +122,7 @@ export default class Markdown extends React.Component {
                 </div>
               ))}
           </div>
-          <Tooltip title="Markdown Syntax" placement="bottom">
+          <Tooltip title={I18n.t("markdown syntax")} placement="bottom">
             <IconButton
               aria-label="help"
               className="help-btn"
@@ -133,7 +134,7 @@ export default class Markdown extends React.Component {
               </i>
             </IconButton>
           </Tooltip>
-          <Tooltip title="Full Screen" placement="bottom">
+          <Tooltip title={I18n.t("full screen")} placement="bottom">
             <IconButton
               size="small"
               className="full-screen-btn"
@@ -151,7 +152,7 @@ export default class Markdown extends React.Component {
               )}
             </IconButton>
           </Tooltip>
-          <Tooltip title="Preview" placement="bottom">
+          <Tooltip title={I18n.t("toggle view")} placement="bottom">
             <IconButton
               size="small"
               className="show-preview-btn"
