@@ -14,7 +14,7 @@
 
 # 新特性
 
-- 同时打开多个文档 --- <img src="https://github.com/renhongl/markdown-editor/blob/master/source/new-icon.png" width="40px"/>
+- 同时打开多个文档 --- <span style="color: red">新</span>
 - 拖动 Markdown 文档到左边区域，自动导入本地文本
 - 从你的本地导入 markdwon 文档
 - 导出成 pdf，html，以及 markdown

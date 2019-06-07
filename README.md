@@ -14,7 +14,7 @@ Pomelo Markdown Editor is a full front-end side, react powered html5 markdown ed
 
 # New Features
 
-- Open multiple file at the same time --- <img src="https://github.com/renhongl/markdown-editor/blob/master/source/new-icon.png" width="40px"/>
+- Open multiple file at the same time --- <span style="color: red">New</span>
 - Drag markdown file to left, automatic get content
 - Import from markdown file, get all data from your local
 - Export as pdf, html and markdown
