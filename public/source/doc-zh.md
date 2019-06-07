@@ -1,4 +1,4 @@
-# 柚子 Markdown 编辑器 [![star](https://github.com/renhongl/markdown-editor/blob/master/source/star.png)](https://github.com/renhongl/markdown-editor)
+# 柚子 Markdown 编辑器 [![star](https://github.com/renhongl/markdown-editor/blob/gh-pages/static/source/star.png)](https://github.com/renhongl/markdown-editor)
 
 <img src="https://renhongl.github.io/images/logo.png" width="40px"/>
 
@@ -9,7 +9,7 @@
 
 # 文档
 
-- [简体中文](https://github.com/renhongl/markdown-editor/blob/master/source/doc-zh.md)
+- [简体中文](https://github.com/renhongl/markdown-editor/blob/gh-pages/static/source/doc-zh.md)
 - [English](https://github.com/renhongl/markdown-editor/blob/master/README.md)
 
 # 新特性
