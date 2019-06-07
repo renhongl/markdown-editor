@@ -1,4 +1,4 @@
-export const defaultText = `# Markdown Editor
+export const defaultText = `# Markdown Editor [![star](https://github.com/renhongl/markdown-editor/blob/gh-pages/static/srouce/star.png)](https://github.com/renhongl/markdown-editor)
 
 <img src="https://renhongl.github.io/images/logo.png" width="40px"/>
 
@@ -9,12 +9,12 @@ Pomelo Markdown Editor is a full front-end side, react powered html5 markdown ed
 
 # Documentation
 
-- [简体中文](https://github.com/renhongl/markdown-editor/blob/master/doc-zh.md)
-- [英语](https://github.com/renhongl/markdown-editor/blob/master/README.md)
+- [简体中文](https://github.com/renhongl/markdown-editor/blob/gh-pages/static/source/doc-zh.md)
+- [English](https://github.com/renhongl/markdown-editor/blob/master/README.md)
 
 # New Features
 
-- Open multiple file at the same time --- <span style="color: red">NEW</span>
+- Open multiple file at the same time --- <img src="https://github.com/renhongl/markdown-editor/blob/master/source/new-icon.png" width="40px"/>
 - Drag markdown file to left, automatic get content
 - Import from markdown file, get all data from your local
 - Export as pdf, html and markdown
@@ -56,9 +56,10 @@ Pomelo Markdown Editor requires [Node.js]() v8+ to run.
 MIT
 
 
+
 `;
 
-export const defaultChineseText = `# 柚子 Markdown 编辑器
+export const defaultChineseText = `# 柚子 Markdown 编辑器 [![star](https://github.com/renhongl/markdown-editor/blob/gh-pages/static/source/star.png)](https://github.com/renhongl/markdown-editor)
 
 <img src="https://renhongl.github.io/images/logo.png" width="40px"/>
 
@@ -69,12 +70,12 @@ export const defaultChineseText = `# 柚子 Markdown 编辑器
 
 # 文档
 
-- [简体中文](https://github.com/renhongl/markdown-editor/blob/master/doc-zh.md)
-- [英语](https://github.com/renhongl/markdown-editor/blob/master/README.md)
+- [简体中文](https://github.com/renhongl/markdown-editor/blob/gh-pages/static/source/doc-zh.md)
+- [English](https://github.com/renhongl/markdown-editor/blob/master/README.md)
 
 # 新特性
 
-- 同时打开多个文档 --- <span style="color: red">新</span>
+- 同时打开多个文档 --- <img src="https://github.com/renhongl/markdown-editor/blob/master/source/new-icon.png" width="40px"/>
 - 拖动 Markdown 文档到左边区域，自动导入本地文本
 - 从你的本地导入 markdwon 文档
 - 导出成 pdf，html，以及 markdown
@@ -114,6 +115,7 @@ export const defaultChineseText = `# 柚子 Markdown 编辑器
 # 许可证
 
 MIT
+
 
 
 `;
