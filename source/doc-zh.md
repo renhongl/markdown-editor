@@ -1,4 +1,4 @@
-# 柚子 Markdown 编辑器
+# 柚子 Markdown 编辑器 [![star](https://github.com/renhongl/markdown-editor/blob/master/source/star.png)](https://github.com/renhongl/markdown-editor)
 
 <img src="https://renhongl.github.io/images/logo.png" width="40px"/>
 
@@ -9,12 +9,12 @@
 
 # 文档
 
-- [简体中文](https://github.com/renhongl/markdown-editor/blob/master/doc-zh.md)
-- [英语](https://github.com/renhongl/markdown-editor/blob/master/README.md)
+- [简体中文](https://github.com/renhongl/markdown-editor/blob/master/source/doc-zh.md)
+- [English](https://github.com/renhongl/markdown-editor/blob/master/README.md)
 
 # 新特性
 
-- 同时打开多个文档 --- <span style="color: red">新</span>
+- 同时打开多个文档 --- <img src="https://github.com/renhongl/markdown-editor/blob/master/source/new-icon.png" width="40px"/>
 - 拖动 Markdown 文档到左边区域，自动导入本地文本
 - 从你的本地导入 markdwon 文档
 - 导出成 pdf，html，以及 markdown

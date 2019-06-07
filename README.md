@@ -1,4 +1,4 @@
-# Markdown Editor
+# Markdown Editor [![star](https://github.com/renhongl/markdown-editor/blob/master/source/star.png)](https://github.com/renhongl/markdown-editor)
 
 <img src="https://renhongl.github.io/images/logo.png" width="40px"/>
 
@@ -9,12 +9,12 @@ Pomelo Markdown Editor is a full front-end side, react powered html5 markdown ed
 
 # Documentation
 
-- [简体中文](https://github.com/renhongl/markdown-editor/blob/master/doc-zh.md)
-- [英语](https://github.com/renhongl/markdown-editor/blob/master/README.md)
+- [简体中文](https://github.com/renhongl/markdown-editor/blob/master/source/doc-zh.md)
+- [English](https://github.com/renhongl/markdown-editor/blob/master/README.md)
 
 # New Features
 
-- Open multiple file at the same time --- <span style="color: red">NEW</span>
+- Open multiple file at the same time --- <img src="https://github.com/renhongl/markdown-editor/blob/master/source/new-icon.png" width="40px"/>
 - Drag markdown file to left, automatic get content
 - Import from markdown file, get all data from your local
 - Export as pdf, html and markdown
