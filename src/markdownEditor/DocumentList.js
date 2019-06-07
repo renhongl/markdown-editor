@@ -28,29 +28,10 @@ const styles = theme => ({
 });
 
 class CheckboxList extends React.Component {
-  state = {
-    checked: [0]
-  };
-
-  handleToggle = value => () => {
-    const { checked } = this.state;
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    this.setState({
-      checked: newChecked
-    });
-  };
-
-  handleAction = index => () => {
+  handleAction = index => {
     this.props.toggleDrawer();
     this.props.switchCurrent(index);
+    this.props.openFile(index);
   };
 
   editTitle = id => {
@@ -73,7 +54,7 @@ class CheckboxList extends React.Component {
   };
 
   render() {
-    const { classes, fileList, deleteAction, current, openFile } = this.props;
+    const { classes, fileList, deleteAction, current } = this.props;
     return (
       <List className={classes.root}>
         {fileList.map((item, index) => (
@@ -86,15 +67,13 @@ class CheckboxList extends React.Component {
             dense
             button
             onClick={() => {
-              openFile(index);
-              this.handleToggle();
+              this.handleAction(index);
             }}
           >
             <ListItemText
               className="doc-title-input"
               primary={item.title}
               title={item.title}
-              onClick={this.handleAction(index)}
             />
             <ListItemSecondaryAction className="file-action-icon">
               <Tooltip title={I18n.t("rename")} placement="top">

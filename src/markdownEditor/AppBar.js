@@ -182,7 +182,7 @@ class MenuAppBar extends React.Component {
                         type="file"
                         onChange={e => this.handleImportClose("md", e)}
                       />
-                      MARKDOWN FILE
+                      MARKDOWN
                     </div>
                   </MenuItem>
                 </Menu>

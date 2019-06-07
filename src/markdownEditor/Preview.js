@@ -24,6 +24,7 @@ const md = new MarkdownIt({
   }
 });
 
+
 export default class Preview extends React.Component {
   componentDidMount() {
     this.addStyles();
@@ -138,7 +139,9 @@ export default class Preview extends React.Component {
     return (
       <div className="preview-container">
         <div className="preview-title">
-          <div className="preview-title-left">{I18n.t("preview")}</div>
+          <div className="preview-title-left">
+            {I18n.t("preview")}{" "}
+          </div>
           <div className="preview-title-right">
             <div className="word-count">
               <span className="key">{I18n.t("words")}:</span>&nbsp;

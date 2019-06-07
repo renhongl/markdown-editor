@@ -96,7 +96,6 @@ p {
 .preview-title {
   height: 35px;
   background: #f9f9f9;
-  border-bottom: 1px solid #cecece;
   border-left: 0px;
   line-height: 35px;
   padding-left: 10px;
@@ -235,7 +234,7 @@ p {
 }
 
 .import-md-btn {
-  width: 150px;
+  width: 100px;
   position: relative;
 }
 

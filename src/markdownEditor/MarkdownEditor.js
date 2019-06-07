@@ -284,6 +284,33 @@ export default class MarkdownEditor extends React.Component {
       });
   };
 
+  getPdf = callback => {
+    const { fileList, current } = this.state;
+    let element = document.getElementById("content");
+    let opt = {
+      margin: [0.5, 0.5, 0.5, 0.5],
+      filename: fileList[current].title.replace(".md", ""),
+      image: { type: "jpeg", quality: 0.98 },
+      pagebreak: { mode: ["avoid-all"] },
+      html2canvas: {
+        dpi: 192,
+        letterRendering: true,
+        useCORS: true,
+        imageTimeout: 0
+      },
+      useCORS: true,
+      jsPDF: { unit: "in", format: "letter", orientation: "portrait" }
+    };
+    html2pdf()
+      .set(opt)
+      .from(element)
+      .toPdf()
+      .get("pdf")
+      .then(function(pdf) {
+        callback(pdf.output("bloburl"), "aaa");
+      });
+  };
+
   exportPdf = () => {
     const { fileList, current } = this.state;
     let element = document.getElementById("content");
@@ -755,7 +782,7 @@ export default class MarkdownEditor extends React.Component {
             </div>
             <div className="app-right" style={styles.right}>
               {current !== -1 ? (
-                <Preview input={fileList[current].text} />
+                <Preview input={fileList[current].text} getPdf={this.getPdf} />
               ) : null}
             </div>
           </div>
