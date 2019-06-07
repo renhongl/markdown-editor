@@ -1,4 +1,4 @@
-export const defaultText = `# Markdown Editor [![star](https://github.com/renhongl/markdown-editor/blob/gh-pages/static/srouce/star.png)](https://github.com/renhongl/markdown-editor)
+export const defaultText = `# Markdown Editor
 
 <img src="https://renhongl.github.io/images/logo.png" width="40px"/>
 
@@ -9,7 +9,7 @@ Pomelo Markdown Editor is a full front-end side, react powered html5 markdown ed
 
 # Documentation
 
-- [简体中文](https://github.com/renhongl/markdown-editor/blob/gh-pages/static/source/doc-zh.md)
+- [简体中文](https://github.com/renhongl/markdown-editor/blob/master/doc-zh.md)
 - [English](https://github.com/renhongl/markdown-editor/blob/master/README.md)
 
 # New Features
@@ -57,9 +57,10 @@ MIT
 
 
 
+
 `;
 
-export const defaultChineseText = `# 柚子 Markdown 编辑器 [![star](https://github.com/renhongl/markdown-editor/blob/gh-pages/static/source/star.png)](https://github.com/renhongl/markdown-editor)
+export const defaultChineseText = `# 柚子 Markdown 编辑器
 
 <img src="https://renhongl.github.io/images/logo.png" width="40px"/>
 
@@ -70,7 +71,7 @@ export const defaultChineseText = `# 柚子 Markdown 编辑器 [![star](https://
 
 # 文档
 
-- [简体中文](https://github.com/renhongl/markdown-editor/blob/gh-pages/static/source/doc-zh.md)
+- [简体中文](https://github.com/renhongl/markdown-editor/blob/master/doc-zh.md)
 - [English](https://github.com/renhongl/markdown-editor/blob/master/README.md)
 
 # 新特性
@@ -115,6 +116,7 @@ export const defaultChineseText = `# 柚子 Markdown 编辑器 [![star](https://
 # 许可证
 
 MIT
+
 
 
 
