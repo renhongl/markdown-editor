@@ -98,7 +98,7 @@ export default () => (
       <span className="help-key">备注：</span>
       <span className="help-value">
         Markdown支持HTML书写，如果以上语法不能完成，可以使用内嵌HTML的方式。例如：
-        &lt;span style="color: red"&gt;test/span&gt;
+        &lt;span style="color: red"&gt;test&lt;/span&gt;
       </span>
     </p>
   </div>
