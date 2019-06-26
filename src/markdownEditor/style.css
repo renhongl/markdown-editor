@@ -39,11 +39,11 @@
 .markdown {
   height: calc(100% - 35px);
   letter-spacing: 0px;
-  line-height: 30px;
+  line-height: 25px;
   word-spacing: 0px;
   font-family: monospace;
   font-weight: 400;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .markdown-title {
@@ -72,6 +72,7 @@
 
 .CodeMirror-cursor {
   border-left: 2px solid #000;
+  height: 80%;
 }
 
 .CodeMirror {
