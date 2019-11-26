@@ -1,6 +1,6 @@
 export const defaultText = `# Markdown Editor
 
-<img src="https://renhongl.github.io/images/logo.png" width="40px"/>
+<img src="https://renhongl.github.io/markdown-editor/avator.png" width="40px"/>
 
 Pomelo Markdown Editor is a full front-end side, react powered html5 markdown editor.
 
@@ -62,7 +62,7 @@ MIT
 
 export const defaultChineseText = `# 柚子 Markdown 编辑器
 
-<img src="https://renhongl.github.io/images/logo.png" width="40px"/>
+<img src="https://renhongl.github.io/markdown-editor/avator.png" width="40px"/>
 
 柚子 Markdown 编辑器是一个纯前端语言，基于 react 的 html5 markdown 编辑器。
 
@@ -90,7 +90,7 @@ export const defaultChineseText = `# 柚子 Markdown 编辑器
 
 # 使用技术
 
-柚子 Markdown 编辑器使用了如血一些技术：
+柚子 Markdown 编辑器使用了下一些技术：
 
 - [React]() - js 网页增强库
 - [CodeMirror]() - 多才多艺的文本编辑器
