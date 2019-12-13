@@ -99,6 +99,11 @@ class MenuAppBar extends React.Component {
     });
   };
 
+  loginGit = () => {
+    window.location =
+      "https://github.com/login/oauth/authorize?client_id=a3be5a8e9cc8df9b2254";
+  };
+
   render() {
     const {
       classes,
@@ -271,6 +276,14 @@ class MenuAppBar extends React.Component {
                   onClick={this.toggleSetting}
                 >
                   <i className="material-icons">settings</i>
+                </IconButton>
+                <IconButton
+                  className="setting-icon"
+                  color="inherit"
+                  aria-label="Menu"
+                  onClick={this.loginGit}
+                >
+                  <i className="material-icons">note_add</i>
                 </IconButton>
               </div>
             )}

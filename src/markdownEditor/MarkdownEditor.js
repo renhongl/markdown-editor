@@ -159,6 +159,37 @@ export default class MarkdownEditor extends React.Component {
       this.autoSaveDoc();
     }
     this.addKeDownEvent();
+    this.getToken();
+  }
+
+  getToken() {
+    let code = this.getUrlVars("code", "");
+    fetch("https://github.com/login/oauth/access_token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        client_id: "a3be5a8e9cc8df9b2254",
+        client_secret: "ec284f3c399ea3896c4e8708da20d25e6b844b0c",
+        code: code
+      })
+    }).then(res => {
+      res.json().then(json => {
+        console.log("auth: " + json);
+      });
+    });
+  }
+
+  getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(
+      /[?&]+([^=&]+)=([^&]*)/gi,
+      function(m, key, value) {
+        vars[key] = value;
+      }
+    );
+    return vars;
   }
 
   addKeDownEvent = () => {
