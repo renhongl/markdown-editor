@@ -166,6 +166,7 @@ export default class MarkdownEditor extends React.Component {
     let code = this.getUrlVars("code", "");
     fetch("https://github.com/login/oauth/access_token", {
       method: "POST",
+      mode: "cors",
       headers: {
         "Content-Type": "application/json"
       },
