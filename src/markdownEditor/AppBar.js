@@ -277,14 +277,14 @@ class MenuAppBar extends React.Component {
                 >
                   <i className="material-icons">settings</i>
                 </IconButton>
-                <IconButton
+                {/* <IconButton
                   className="setting-icon"
                   color="inherit"
                   aria-label="Menu"
                   onClick={this.loginGit}
                 >
                   <i className="material-icons">note_add</i>
-                </IconButton>
+                </IconButton> */}
               </div>
             )}
           </Toolbar>
