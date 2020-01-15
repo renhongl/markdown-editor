@@ -380,6 +380,7 @@ span.setting-key {
 }
 
 .word-count {
-  margin-left: 10px;
+  margin-left: 20px;
   text-align: center;
+  position: relative;
 }
